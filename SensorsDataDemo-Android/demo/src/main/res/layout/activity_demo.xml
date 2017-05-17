@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_demo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.sensorsdata.demo.DemoActivity">
+    <TextView
+        android:text="tttt"
+        android:gravity="center"
+        android:id="@+id/butterknife01"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <TextView
+        android:text="tt0222"
+        android:gravity="center"
+        android:id="@+id/butterknife02"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</LinearLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_code"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="1dp"
+    tools:context=".CodeActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_code_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+        <TextView
+            android:id="@+id/textView_code_txt"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/textview_shape"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="显示事件"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/button_code_track"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="事件埋点(track)" />
+
+        <Button
+            android:id="@+id/button_code_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="识别用户(login)" />
+
+        <Button
+            android:id="@+id/button_code_profile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="设置用户属性(profile)" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <Button
+                android:id="@+id/button_codeActivity_trackTime_begin"
+                android:text="计时开始\n(trackTimer)"
+                android:background="@drawable/button_selector"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button_codeActivity_trackTime_end"
+                android:text="计时结束\n(track)"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button_selector"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_code_bg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@mipmap/down"
+        android:gravity="center"
+        android:text="点击可查看代码埋点事件属性，以ViewProduct事件示例"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/imageView_code_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/code_bg"
+        android:visibility="gone" />
+</RelativeLayout>

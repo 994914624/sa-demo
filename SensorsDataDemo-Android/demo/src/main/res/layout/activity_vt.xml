@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_vt"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="1dp"
+    tools:context=".VTActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_vt_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <ImageView
+            android:id="@+id/imageView_vt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:src="@mipmap/sensorsdata" />
+
+        <EditText
+            android:id="@+id/editText_vt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/textview_shape"
+            android:hint="请输入" />
+
+        <TextView
+            android:id="@+id/textView_vt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_vt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="Button" />
+
+
+        <CheckBox
+            android:id="@+id/checkBox_vt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="CheckBox" />
+
+        <RadioButton
+            android:id="@+id/radioButton_vt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="RadioButton" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton_vt"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+    <TextView
+        android:background="@mipmap/down"
+        android:id="@+id/textView_vt_bg"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:text="点击可查看可视化埋点事件属性，以TextView示例"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/imageView_vt_bg"
+        android:scaleType="fitXY"
+        android:src="@mipmap/vt_bg"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

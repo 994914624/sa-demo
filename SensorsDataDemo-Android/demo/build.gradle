@@ -1,0 +1,103 @@
+apply plugin: 'com.android.application'
+//添加 com.sensorsdata.analytics.android 插件
+apply plugin: 'com.sensorsdata.analytics.android'
+
+//repositories {
+//    flatDir {
+//        dirs 'libs'
+//    }
+//}
+
+sensorsAnalytics {
+    includeJarFilter 'SensorsAnalyticsSDK-Beta', 'com.android.support'
+}
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+
+    defaultConfig {
+        applicationId "cn.sensorsdata.demo"
+        minSdkVersion 11
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //激光推送
+        applicationId "cn.sensorsdata.demo" //JPush上注册的包名
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "59549f789b379e79761a7b86", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                //个推
+                GETUI_APP_ID : "49nJPRDPOV6BKGVSYIeU45",
+                GETUI_APP_KEY : "B5SOup4JHu6ltY4oOYjGP1",
+                GETUI_APP_SECRET : "OUgQ0Uo6bqAdou2BOxk1F"
+        ]
+        //个推
+//        manifestPlaceholders = [
+//                GETUI_APP_ID : "49nJPRDPOV6BKGVSYIeU45",
+//                GETUI_APP_KEY : "B5SOup4JHu6ltY4oOYjGP1",
+//                GETUI_APP_SECRET : "OUgQ0Uo6bqAdou2BOxk1F"
+//        ]
+
+
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    //v7 包
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration'
+    compile 'cn.jiguang.sdk:jpush:3.0.0'
+    // 此处以JPush 3.0.0 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.0.0'
+    // 此处以JCore 1.0.0 版本为例。
+    compile files('libs/MiPush_SDK_Client_3_2_1.jar')
+    //添加 Sensors Analytics SDK 依赖
+    compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.7.3'
+    //compile(name:'SensorsAnalyticsSDK-release', ext:'aar')
+    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK-Beta:1.7.0'
+    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.6.39'
+    //友盟
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //crashlytics
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+    //butterknife
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    // 个推
+    compile 'com.getui:sdk:2.10.2.0'
+    compile 'com.android.support:support-v4:25.0.0'
+}
+
+//----------crashlytics-----------
+
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
