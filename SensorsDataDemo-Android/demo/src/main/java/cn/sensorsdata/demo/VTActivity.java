@@ -1,8 +1,10 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,11 +25,13 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
 /**
  * 可视化埋点 Activity
  */
+@Route(path = "/vt/activity")
 public class VTActivity extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private  TextView textView_vt_bg =null;
@@ -38,11 +42,11 @@ public class VTActivity extends Activity implements View.OnClickListener, Compou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vt);
-        setActionBar();
+        if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
         openVTtack();
         //由于此页面演示可视化埋点，所以忽略此页面的全埋点采集
-       SensorsDataAPI.sharedInstance(this).filterAutoTrackActivity(this);
+       SensorsDataAPI.sharedInstance(this).ignoreAutoTrackActivity(VTActivity.class);
     }
 
     /**
@@ -136,6 +140,7 @@ public class VTActivity extends Activity implements View.OnClickListener, Compou
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar(){
         ActionBar actionBar=getActionBar();
         actionBar.setTitle("可视化埋点");

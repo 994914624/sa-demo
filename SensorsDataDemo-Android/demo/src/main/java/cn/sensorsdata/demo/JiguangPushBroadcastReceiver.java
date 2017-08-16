@@ -85,9 +85,7 @@ public class JiguangPushBroadcastReceiver extends BroadcastReceiver {
                     "事件属性:{ msg_title_jg : " + message.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE) +
                     ",msg_id_jg : " + message.getString(JPushInterface.EXTRA_MSG_ID) +
                     " }", Toast.LENGTH_LONG).show();
-        } catch (InvalidDataException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

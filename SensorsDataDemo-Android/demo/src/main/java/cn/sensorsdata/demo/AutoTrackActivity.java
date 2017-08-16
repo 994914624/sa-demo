@@ -1,9 +1,12 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppClick;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreenAndAppClick;
+import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackOnClick;
+
+@Route(path = "/autotrack/activity")
 public class AutoTrackActivity extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private TextView textView_bg=null;
@@ -34,7 +44,7 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_track);
-        setActionBar();
+        if (Build.VERSION.SDK_INT>11)setActionBar();
         initView();
         initListView();
 
@@ -46,6 +56,7 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
      * 初始化view、并设置Listener
      */
     private void initView() {
+
         Button button = (Button) findViewById(R.id.button_autotrack);
         TextView textView = (TextView) findViewById(R.id.textView_autotrack);
         ImageView imageView = (ImageView) findViewById(R.id.imageView_autotrack);
@@ -121,10 +132,13 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
     /**
      * 点击事件
      */
+    //
+    // @SensorsDataIgnoreTrackOnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_autotrack:
+
                 Toast.makeText(this, "" +
                         "已尝试向Sensors Analytics发送track事件\n" +
                         "事件名为:$AppClick\n" +
@@ -250,8 +264,12 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar() {
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = this.getActionBar();
+        if(actionBar!=null){
+
+
         actionBar.setTitle("全埋点");
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -261,6 +279,7 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
         int width = getResources().getDisplayMetrics().widthPixels;
         tvTitle.setWidth(width);
         tvTitle.setGravity(Gravity.CENTER);
+        }
     }
 
     /**

@@ -76,9 +76,7 @@ public class GeTuiIntentService extends GTIntentService {
                             ",msg_id_xm : " + gtTransmitMessage.getMessageId() +
                             " }", Toast.LENGTH_LONG).show();
 
-                } catch (InvalidDataException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

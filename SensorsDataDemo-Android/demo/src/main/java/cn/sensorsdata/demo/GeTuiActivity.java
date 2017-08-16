@@ -1,8 +1,10 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,19 +12,21 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.igexin.sdk.PushManager;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 /**
  * 个推 Activity
  */
+@Route(path = "/getui/activity")
 public class GeTuiActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ge_tui);
-        setActionBar();
+        if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
     }
 
@@ -45,6 +49,7 @@ public class GeTuiActivity extends Activity {
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar(){
         ActionBar actionBar=getActionBar();
         actionBar.setTitle("个推");

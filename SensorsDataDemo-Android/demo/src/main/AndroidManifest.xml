@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="cn.sensorsdata.demo">
 
+    <uses-sdk tools:overrideLibrary="com.alibaba.android.vlayout,org.litepal,com.alibaba.android.arouter,me.yokeyword.fragmentation_components,me.yokeyword.fragmentation,com.squareup.leakcanary" />
+
     <!-- jiguang push Required -->
     <permission
         android:name="cn.sensorsdata.demo.permission.JPUSH_MESSAGE"
@@ -38,13 +40,18 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
+    <meta-data
+        android:name="android.webkit.WebView.EnableSafeBrowsing"
+        android:value="true" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/sensorsdata"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon, android:theme">
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
@@ -53,12 +60,27 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <!-- 打开神策调试输出日志 -->
-        <meta-data
-            android:name="com.sensorsdata.analytics.android.EnableLogging"
-            android:value="true" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="www"
+                    android:scheme="yang" />
+            </intent-filter>
+
+            <!-- GrowingIO 启动圈选接口 -->
+            <intent-filter>
+                <data android:scheme="growing.32c9d0e25e58b502"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+            <!-- GrowingIO 启动圈选接口 -->
+        </activity>
 
         <!-- jiguang push Required from here -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
@@ -216,7 +238,7 @@
             android:value="58ad5104734be40b8d0017ab" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Channel ID" />
+            android:value="wandoujia" />
 
         <!-- crashlytics -->
         <meta-data
@@ -228,23 +250,54 @@
             android:name="com.sensorsdata.analytics.android.EnableLogging"
             android:value="true" />
         <!-- utm 渠道信息 -->
-        <meta-data
-            android:name="SENSORS_ANALYTICS_UTM_SOURCE"
-            android:value="渠道A" />
-        <meta-data
-            android:name="SENSORS_ANALYTICS_UTM_CAMPAIGN"
-            android:value="广告A" />
 
-        <activity android:name=".DemoActivity" />
+
+        <!-- 开启支持 butterknife 的@OnClick -->
+        <meta-data
+            android:name="com.sensorsdata.analytics.android.ButterknifeOnClick"
+            android:value="true" />
+        <!--<meta-data-->
+            <!--android:name="com.sensorsdata.analytics.android.AndroidId"-->
+            <!--android:value="true" />-->
         <!-- 个推 from here -->
         <service
             android:name=".GeTuiService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice"></service>
+            android:process=":pushservice" />
         <service android:name=".GeTuiIntentService" />
         <!-- 个推 to here -->
-        <activity android:name=".GeTuiActivity"></activity>
+        <activity android:name=".GeTuiActivity" />
+        <activity
+            android:label="商品详情"
+            android:name=".DemoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".YangActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".YangTab2Activity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".YangTabActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name=".YangfragActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity android:name=".YangappfragActivity" />
+        <activity android:name=".fragmentation.FragmentationActivity"
+            android:theme="@style/Theme.AppCompat.Light"/>
+
+        <!-- talkingdata begin -->
+        <service android:name="com.talkingdata.sdk.TDAntiCheatingService"
+            android:process="com.talkingdata.sdk.TDAntiCheatingService">  <!--用户质量评估Service可以配置在主进程或者单独进程-->
+            <intent-filter>
+                <action android:name="com.talkingdata.sdk.TDAntiCheatingService" />
+            </intent-filter>
+        </service>
+        <meta-data android:name="TD_APP_ID" android:value="A1093941946740739F0EDEDA6A1B3E44" />
+        <meta-data android:name="TD_CHANNEL_ID" android:value="XXX" />
+        <!-- talkingdata end -->
     </application>
 
 </manifest>

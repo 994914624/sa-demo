@@ -1,8 +1,10 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sensorsdata.analytics.android.sdk.SensorsDataTrackViewOnClick;
 
 import butterknife.ButterKnife;
@@ -22,14 +25,14 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * 极光推送 Activity
  */
-
+@Route(path = "/jiguangpush/activity")
 public class JiguangPushActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jpush);
-        setActionBar();
+        if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
 
     }
@@ -56,6 +59,7 @@ public class JiguangPushActivity extends Activity {
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar(){
         ActionBar actionBar=getActionBar();
         actionBar.setTitle("极光推送");

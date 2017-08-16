@@ -1,9 +1,11 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
@@ -21,14 +24,14 @@ import com.xiaomi.mipush.sdk.MiPushClient;
 /**
  * 小米推送 Activity
  */
-
+@Route(path = "/xiaomipush/activity")
 public class XiaomiPushActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xiaomi);
-        setActionBar();
+        if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
 
 
@@ -55,6 +58,7 @@ public class XiaomiPushActivity extends Activity {
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar(){
         ActionBar actionBar=getActionBar();
         actionBar.setTitle("小米推送");

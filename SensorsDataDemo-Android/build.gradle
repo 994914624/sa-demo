@@ -1,28 +1,46 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.1.2-3'
     repositories {
+        mavenLocal()
+        mavenCentral()
         jcenter()
-//        mavenLocal()
-//        mavenCentral()
+
+ //       maven {  url uri('/Users/yang/Documents/repo')  }
 //        maven { url "https://jitpack.io" }
 //        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.3.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         //添加 android-gradle-plugin 依赖
-        classpath 'com.sensorsdata.analytics.android:android-gradle-plugin:1.0.5'
+        classpath 'com.sensorsdata.analytics.android:android-gradle-plugin:1.0.9'
+        classpath "io.realm:realm-gradle-plugin:3.2.0"
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        classpath 'com.bugtags.library:bugtags-gradle:latest.integration'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.7.0'
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'me.tatarka:gradle-retrolambda:3.6.1'
+
+//        classpath group: 'com.sensorsdata.analytics.android',
+//                name: 'android-gradle-plugin',
+//                version: '1.0.9-SNAPSHOT'
+
+        //gio
+        classpath 'com.growingio.android:vds-gradle-plugin:0.9.103'
+
     }
 }
 
 allprojects {
     repositories {
+        mavenLocal()
+        mavenCentral()
         jcenter()
-//        mavenLocal()
-//        mavenCentral()
 //        maven { url "https://jitpack.io" }
 //        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 

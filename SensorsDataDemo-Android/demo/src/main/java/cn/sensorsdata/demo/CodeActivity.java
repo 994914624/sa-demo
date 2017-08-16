@@ -1,8 +1,10 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.igexin.sdk.PushManager;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
@@ -27,7 +30,7 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * 代码埋点Activity
  */
-
+@Route(path = "/code/activity")
 public class CodeActivity extends Activity implements View.OnClickListener {
 
     TextView tv_txt = null;
@@ -43,10 +46,10 @@ public class CodeActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
-        setActionBar();
+        if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
         //由于此页面演示代码埋点，所以忽略此页面的全埋点采集
-        SensorsDataAPI.sharedInstance(this).filterAutoTrackActivity(this);
+        SensorsDataAPI.sharedInstance(this).ignoreAutoTrackActivity(CodeActivity.class);
 
     }
 
@@ -125,9 +128,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
             properties.put("ProductCatalog", "Laptop Computer");    // 设置商品类别
             properties.put("IsAddedToFav", false);                  // 是否被添加到收藏夹
             SensorsDataAPI.sharedInstance(this).track("ViewProduct", properties);
-        } catch (InvalidDataException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         tv_txt.setGravity(Gravity.LEFT);
@@ -179,6 +180,15 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        try {//初始化我们SDK后 直接调用这段代码
+            JSONObject properties=new JSONObject();
+            properties.put("source","应用宝");//这里的source负责记录不同的渠道包的渠道
+            //渠道追踪，这里取名为 APPInstall
+            SensorsDataAPI.sharedInstance(this).trackInstallation("AppInstall",properties);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tv_txt.setGravity(Gravity.LEFT);
         //把事件显示到TextView上
         tv_txt.setText("login事件\n" +
@@ -199,9 +209,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
             properties.put("Age", 26);
             // 设定用户属性
             SensorsDataAPI.sharedInstance(this).profileSet(properties);
-        } catch (InvalidDataException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         tv_txt.setGravity(Gravity.LEFT);
@@ -241,7 +249,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
                 , Toast.LENGTH_LONG).show();
         try {
             SensorsDataAPI.sharedInstance(this).trackTimer("RecordTime");
-        } catch (InvalidDataException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -265,7 +273,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
                 , Toast.LENGTH_LONG).show();
         try {
             SensorsDataAPI.sharedInstance(this).track("RecordTime");
-        } catch (InvalidDataException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -274,6 +282,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("代码埋点");

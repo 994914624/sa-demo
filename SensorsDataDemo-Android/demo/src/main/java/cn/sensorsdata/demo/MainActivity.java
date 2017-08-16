@@ -1,19 +1,27 @@
 package cn.sensorsdata.demo;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
 import com.umeng.analytics.MobclickAgent;
@@ -21,18 +29,23 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.sensorsdata.demo.fragmentation.FragmentationActivity;
+
 
 /**
- * 主页面 MainActivity
+ * 主页面 MainActivity。
  */
-
+@Route(path = "/main/activity")
 public class MainActivity extends Activity implements View.OnClickListener {
 
+    private int num=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setActionBar();
+
+
+        if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
 //        try {
 //            JSONObject properties = new JSONObject();
@@ -70,17 +83,30 @@ public class MainActivity extends Activity implements View.OnClickListener {
         TextView jPush = (TextView) findViewById(R.id.textView_jg);
         TextView xmPush = (TextView) findViewById(R.id.textView_xm);
         TextView gtPush = (TextView) findViewById(R.id.textView_gt);
+        TextView demo = (TextView) findViewById(R.id.textView_yang);
         code.setOnClickListener(this);
         vt.setOnClickListener(this);
         autotrack.setOnClickListener(this);
         jPush.setOnClickListener(this);
         xmPush.setOnClickListener(this);
         gtPush.setOnClickListener(this);
+        demo.setOnClickListener(this);
+//        demo.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                startActivity(new Intent().setClass(MainActivity.this, YangTab2Activity.class));
+//                //startActivity(new Intent().setClass(MainActivity.this, YangappfragActivity.class));
+//                return false;
+//            }
+//        });
+        //上下文菜单
+        registerForContextMenu(demo);
     }
 
     /**
      * 设置ActionBar
      */
+    @TargetApi(11)
     private void setActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("神策Demo");
@@ -101,30 +127,49 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.textView_code:
-                intent.setClass(this, CodeActivity.class);
+                ARouter.getInstance().build("/code/activity").navigation();
+//                intent.setClass(this, CodeActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.textView_vt:
-                intent.setClass(this, VTActivity.class);
+                ARouter.getInstance().build("/vt/activity").navigation();
+//                intent.setClass(this, VTActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.textView_autotrack:
-                intent.setClass(this, AutoTrackActivity.class);
+                ARouter.getInstance().build("/autotrack/activity").navigation();
+//                intent.setClass(this, AutoTrackActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.textView_jg:
-                intent.setClass(this, JiguangPushActivity.class);
+                ARouter.getInstance().build("/jiguangpush/activity").navigation();
+//                intent.setClass(this, JiguangPushActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.textView_xm:
-                intent.setClass(this, XiaomiPushActivity.class);
-
+                ARouter.getInstance().build("/xiaomipush/activity").navigation();
+//                intent.setClass(this, XiaomiPushActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.textView_gt:
-                intent.setClass(this, GeTuiActivity.class);
+                ARouter.getInstance().build("/getui/activity").navigation();
+//                intent.setClass(this, GeTuiActivity.class);
+//                startActivity(intent);
+                break;
+            case R.id.textView_yang:
 
+
+                    intent.setClass(this, FragmentationActivity.class);
+
+
+                startActivity(intent);
                 break;
 
             default:
                 break;
         }
-        startActivity(intent);
+
+
     }
 
     /**
@@ -140,48 +185,52 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //    }
 
 
-//    /**
-//     * Sensors Analytics 采集数据的地址
-//     */
-//    //private final static String SA_SERVER_URL = "http://vtrack.cloud.sensorsdata.cn:8006/sa?project=default&token=448973e7b3aa67a9";
-//    private final static String SA_SERVER_URL = "http://test-zouyuhan.cloud.sensorsdata.cn:8006/sa?project=yangzhankun&token=db52d13749514676";
-//
-//    /**
-//     * Sensors Analytics 配置分发的地址
-//     */
-//    //private final static String SA_CONFIGURE_URL = "http://vtrack.cloud.sensorsdata.cn:8006/config/?project=default";
-//    private final static String SA_CONFIGURE_URL = "http://test-zouyuhan.cloud.sensorsdata.cn:8006/config/?project=yangzhankun";
-//    //private final static String SA_VT_URL = "ws://test-zouyuhan.cloud.sensorsdata.cn/api/ws?project=yangzhankun";
-//
-//    /**
-//     * Sensors Analytics DEBUG 模式
-//     * SensorsDataAPI.DebugMode.DEBUG_OFF - 关闭 Debug 模式
-//     * SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
-//     * SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
-//     * 注意！请不要在正式发布的 App 中使用 Debug 模式！
-//     */
-//    private final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_AND_TRACK;
-//
-//    /**
-//     * 初始化 Sensors Analytics SDK
-//     */
-//    private void initSensorsDataAPI() {
-//        SensorsDataAPI.sharedInstance(
-//                this,                               // 传入 Context
-//                SA_SERVER_URL,                      // 数据接收的 URL
-//                SA_CONFIGURE_URL,                   // 配置分发的 URL
-//                SA_DEBUG_MODE);                     // Debug 模式选项
-//        SensorsDataAPI.sharedInstance(this).enableAutoTrack(); //打开自动采集
-//        Log.i("SA.2","初始化 Sensors Analytics SDK");
-//        try {
-//            //渠道追踪，这里取名为 APPInstall （AndroidManifest 文件中已配置了utm 信息）
-//            SensorsDataAPI.sharedInstance(this).trackInstallation("AppInstall",new JSONObject());
-//        } catch (InvalidDataException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
-//
+    /*
+     *context menu----------------------
+     *
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.setHeaderTitle("选择Activity页面");
+        // add context menu item
+        menu.add(0, 1, Menu.NONE, "DemoActivity");
+        menu.add(0, 2, Menu.NONE, "YangActivity");
+        menu.add(0, 3, Menu.NONE, "YangappActivity");
+        menu.add(0, 4, Menu.NONE, "YangTabActivity");
+        menu.add(0, 5, Menu.NONE, "YangTab2Activity");
+        menu.add(0, 6, Menu.NONE, "YangfragActivity");
+
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 1:
+                ARouter.getInstance().build("/demo/activity").navigation();
+                break;
+            case 2:
+                ARouter.getInstance().build("/yang/activity").navigation();
+                break;
+            case 3:
+                ARouter.getInstance().build("/yangapp/activity").navigation();
+                break;
+            case 4:
+                ARouter.getInstance().build("/yangtab/activity").navigation();
+                break;
+            case 5:
+                ARouter.getInstance().build("/yangtab2/activity").navigation();
+                break;
+            case 6:
+                ARouter.getInstance().build("/yangfrag/activity").navigation();
+                break;
+
+
+        }
+        return super.onContextItemSelected(item);
+    }
+
 
 }

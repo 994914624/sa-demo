@@ -1,33 +1,63 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+//应用 Bugtags 插件
+apply plugin: 'com.bugtags.library.plugin'
+//realm  此插件会和神策插件冲突，也会和ARouter冲突
+//apply plugin: 'realm-android'
+//lambda
+//apply plugin: 'me.tatarka.retrolambda'
 //添加 com.sensorsdata.analytics.android 插件
 apply plugin: 'com.sensorsdata.analytics.android'
 
-//repositories {
-//    flatDir {
-//        dirs 'libs'
-//    }
-//}
+//greendao
+apply plugin: 'org.greenrobot.greendao'
+//apply plugin: 'com.jakewharton.butterknif
+//kotlin
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
 
-sensorsAnalytics {
-    includeJarFilter 'SensorsAnalyticsSDK-Beta', 'com.android.support'
+//gio
+apply plugin: 'com.growingio.android'
+
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    mavenCentral()
 }
+
+//sensorsAnalytics {
+//    includeJarFilter 'SensorsAnalyticsSDK-Beta', 'com.android.support'
+//}
 
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
+
+
 
     defaultConfig {
         applicationId "cn.sensorsdata.demo"
-        minSdkVersion 11
-        targetSdkVersion 25
+        minSdkVersion 9
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
 
+        //ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        // Enabling multidex support.
+        //multiDexEnabled true
+
+        buildConfigField 'Boolean', 'IS_DEBUG', 'true'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        //激光推送
-        applicationId "cn.sensorsdata.demo" //JPush上注册的包名
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -35,30 +65,75 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "59549f789b379e79761a7b86", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_PKGNAME   : applicationId,
+                JPUSH_APPKEY    : "59549f789b379e79761a7b86", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL   : "developer-default", //暂时填写默认值即可.
                 //个推
-                GETUI_APP_ID : "49nJPRDPOV6BKGVSYIeU45",
-                GETUI_APP_KEY : "B5SOup4JHu6ltY4oOYjGP1",
-                GETUI_APP_SECRET : "OUgQ0Uo6bqAdou2BOxk1F"
+                GETUI_APP_ID    : "49nJPRDPOV6BKGVSYIeU45",
+                GETUI_APP_KEY   : "B5SOup4JHu6ltY4oOYjGP1",
+                GETUI_APP_SECRET: "OUgQ0Uo6bqAdou2BOxk1F"
         ]
-        //个推
-//        manifestPlaceholders = [
-//                GETUI_APP_ID : "49nJPRDPOV6BKGVSYIeU45",
-//                GETUI_APP_KEY : "B5SOup4JHu6ltY4oOYjGP1",
-//                GETUI_APP_SECRET : "OUgQ0Uo6bqAdou2BOxk1F"
-//        ]
 
-
-
+        //gio
+        resValue("string", "growingio_project_id", "9c1310e01a950506")
+        resValue("string", "growingio_url_scheme", "growing.32c9d0e25e58b502")
     }
     buildTypes {
         release {
+            // 分包设置
+            //multiDexKeepProguard 'multidex-config.pro'
+            multiDexKeepProguard file('multidex-config.pro')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //资源对齐
+            zipAlignEnabled true
+            // 输出不同的 APK 文件
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('release')) {
+                    variant.outputs.each { output ->
+                        def outputFile = output.outputFile
+                        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                            def fileName = "demo_v${defaultConfig.versionName}_${variant.flavorName}_${buildTime()}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        }
+                    }
+                }
+            }
+
+        }
+        debug {
+            buildConfigField 'String', 'API_SERVER_URL', '"https://www.sensorsdata.cn/manual/android_sdk_autotrack.html"'
+
         }
     }
+
+    productFlavors {
+        xiaomi {
+            applicationId "cn.sensorsdata.demo"
+            //manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE","xiaomi")
+        }
+//        google {
+//            applicationId "cn.sensorsdata.demo"
+//            // manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE","xiaomi")
+//        }
+//        baidu {
+//            applicationId "cn.sensorsdata.demo"
+//            //manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE","xiaomi")
+//        }
+    }
+
+    productFlavors.all { flavor ->
+        manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE", name)
+        buildConfigField 'String', 'API_SERVER_URL', '"https://www.sensorsdata.cn/manual/android_sdk_autotrack.html"'
+    }
+
+
+}
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
 }
 
 dependencies {
@@ -66,32 +141,58 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    //v7 包
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration'
-    compile 'cn.jiguang.sdk:jpush:3.0.0'
-    // 此处以JPush 3.0.0 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.0.0'
-    // 此处以JCore 1.0.0 版本为例。
+    //xiaomi
     compile files('libs/MiPush_SDK_Client_3_2_1.jar')
+
     //添加 Sensors Analytics SDK 依赖
-    compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.7.3'
-    //compile(name:'SensorsAnalyticsSDK-release', ext:'aar')
-    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK-Beta:1.7.0'
-    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.6.39'
-    //友盟
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.7.15'
+    compile(name: 'SensorsAnalyticsSDK-release', ext: 'aar')
     //crashlytics
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
-    //butterknife
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    // 个推
+    // 阿里VLayout
+    compile('com.alibaba.android:vlayout:1.0.6@aar') {
+        transitive = true
+    }
+    //kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    //v7
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    //jiguang
+    compile 'cn.jiguang.sdk:jpush:3.0.0'
+    compile 'cn.jiguang.sdk:jcore:1.0.0'
+    //umeng
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //getui
     compile 'com.getui:sdk:2.10.2.0'
-    compile 'com.android.support:support-v4:25.0.0'
+    //greendao
+    compile 'org.greenrobot:greendao:3.2.2'
+    // litepal
+    compile 'org.litepal.android:core:1.5.1'
+    //multidex
+    compile 'com.android.support:multidex:1.0.1'
+    //compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:25.3.1'
+    testCompile 'junit:junit:4.12'
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+
+    //Lambda
+    //retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.1'
+    //ARouter
+    compile 'com.alibaba:arouter-api:1.2.1.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
+    //Fragmentation
+    compile 'me.yokeyword:fragmentation:1.0.7'
+    //leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    //gio
+    compile 'com.growingio.android:vds-android-agent:0.9.103@aar'
+    //talkingdata
+    compile files('libs/TalkingdataAnalytics.jar')
+
 }
 
 //----------crashlytics-----------
@@ -100,4 +201,11 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+}
+
+//---------------------------------
+task hello {
+    doLast {
+        println 'Hello gradle world!'
+    }
 }
