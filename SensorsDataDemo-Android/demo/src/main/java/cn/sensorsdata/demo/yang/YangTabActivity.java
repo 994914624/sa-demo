@@ -1,16 +1,16 @@
-package cn.sensorsdata.demo;
+package cn.sensorsdata.demo.yang;
 
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tendcloud.tenddata.TCAgent;
 
-import java.lang.reflect.Method;
+import cn.sensorsdata.demo.R;
 
 
 @Route(path = "/yangtab/activity")
@@ -46,13 +46,18 @@ public class YangTabActivity extends TabActivity {
 
     @Override
     protected void onResume() {
+        SensorsDataAPI.sharedInstance().track("testOnResume1");
         super.onResume();
-        TCAgent.onPageStart(this,"A");//talkingdata 记录页面时长
+        SensorsDataAPI.sharedInstance().track("testOnResume2");
+
+        TCAgent.onPageStart(this,"A");//talkingdata
+        SensorsDataAPI.sharedInstance().trackTimerBegin("YangTabActivity");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         TCAgent.onPageEnd(this,"A");
+        SensorsDataAPI.sharedInstance().trackTimerEnd("YangTabActivity");
     }
 }

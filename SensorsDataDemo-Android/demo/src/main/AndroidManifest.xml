@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="cn.sensorsdata.demo">
 
-    <uses-sdk tools:overrideLibrary="com.alibaba.android.vlayout,org.litepal,com.alibaba.android.arouter,me.yokeyword.fragmentation_components,me.yokeyword.fragmentation,com.squareup.leakcanary" />
+    <uses-sdk tools:overrideLibrary="com.alibaba.android.vlayout,org.litepal,com.alibaba.android.arouter,me.yokeyword.fragmentation_components,     me.yokeyword.fragmentation,com.squareup.leakcanary,com.yanzhenjie.permission,com.yanzhenjie.alertdialog" />
 
     <!-- jiguang push Required -->
     <permission
@@ -59,6 +59,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -69,15 +70,24 @@
                 <data
                     android:host="www"
                     android:scheme="yang" />
+                <!-- 热力图 -->
+                <data
+                android:host="heatmap"
+                android:scheme="SA8e29687b" />
+                <!-- zhaohaiying -->
+                <!--<data-->
+                <!--android:host="heatmap"-->
+                <!--android:scheme="SAc6021000" />-->
             </intent-filter>
 
             <!-- GrowingIO 启动圈选接口 -->
             <intent-filter>
-                <data android:scheme="growing.32c9d0e25e58b502"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <data android:scheme="growing.32c9d0e25e58b502" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <!-- GrowingIO 启动圈选接口 -->
         </activity>
@@ -246,9 +256,9 @@
             android:value="2e218e4da2fe2863c41c37e579c7d5c29df0a20b" />
 
         <!-- Sensors Analytics SDK 调试日志打开 -->
-        <meta-data
-            android:name="com.sensorsdata.analytics.android.EnableLogging"
-            android:value="true" />
+        <!--<meta-data-->
+            <!--android:name="com.sensorsdata.analytics.android.EnableLogging"-->
+            <!--android:value="true" />-->
         <!-- utm 渠道信息 -->
 
 
@@ -256,8 +266,12 @@
         <meta-data
             android:name="com.sensorsdata.analytics.android.ButterknifeOnClick"
             android:value="true" />
+        <!-- <meta-data -->
+        <!-- android:name="com.sensorsdata.analytics.android.AndroidId" -->
+        <!-- android:value="true" /> -->
+
         <!--<meta-data-->
-            <!--android:name="com.sensorsdata.analytics.android.AndroidId"-->
+            <!--android:name="com.sensorsdata.analytics.android.VTrack"-->
             <!--android:value="true" />-->
         <!-- 个推 from here -->
         <service
@@ -269,35 +283,56 @@
         <!-- 个推 to here -->
         <activity android:name=".GeTuiActivity" />
         <activity
-            android:label="商品详情"
             android:name=".DemoActivity"
+            android:label="商品详情"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".YangActivity"
+            android:name=".yang.YangActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".YangTab2Activity"
+            android:name=".yang.YangTab2Activity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".YangTabActivity"
+            android:name=".yang.YangTabActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".YangfragActivity"
+            android:name=".yang.YangfragActivity"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".YangappfragActivity" />
-        <activity android:name=".fragmentation.FragmentationActivity"
-            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity android:name=".yang.YangappfragActivity" />
+        <activity
+            android:name=".fragmentation.FragmentationActivity"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <!-- talkingdata begin -->
-        <service android:name="com.talkingdata.sdk.TDAntiCheatingService"
-            android:process="com.talkingdata.sdk.TDAntiCheatingService">  <!--用户质量评估Service可以配置在主进程或者单独进程-->
+        <service
+            android:name="com.talkingdata.sdk.TDAntiCheatingService"
+            android:process="com.talkingdata.sdk.TDAntiCheatingService"> <!-- 用户质量评估Service可以配置在主进程或者单独进程 -->
             <intent-filter>
                 <action android:name="com.talkingdata.sdk.TDAntiCheatingService" />
             </intent-filter>
         </service>
-        <meta-data android:name="TD_APP_ID" android:value="A1093941946740739F0EDEDA6A1B3E44" />
-        <meta-data android:name="TD_CHANNEL_ID" android:value="XXX" />
+
+        <meta-data
+            android:name="TD_APP_ID"
+            android:value="A1093941946740739F0EDEDA6A1B3E44" />
+        <meta-data
+            android:name="TD_CHANNEL_ID"
+            android:value="XXX" />
         <!-- talkingdata end -->
+
+
+        <meta-data
+            android:name="SENSORS_ANALYTICS_UTM_SOURCE"
+            android:value="666" />
+
+
+        <meta-data
+            android:name="YOUR_DOWNLOAD_CHANNEL"
+            android:value="应用宝" />
+
+        <activity android:name=".test.YangRecycleViewActivity" />
+        <activity android:name=".yang.YangSingleActivity"
+            android:theme="@style/Theme.AppCompat.Light"/>
     </application>
 
 </manifest>

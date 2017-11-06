@@ -1,4 +1,4 @@
-package cn.sensorsdata.demo;
+package cn.sensorsdata.demo.yang;
 
 
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import cn.sensorsdata.demo.R;
 import cn.sensorsdata.demo.fragment.MyFragment;
 
 @Route(path = "/yang/activity")

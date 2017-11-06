@@ -1,5 +1,7 @@
 package cn.sensorsdata.demo;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.VirtualLayoutAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -34,6 +37,7 @@ import com.alibaba.android.vlayout.layout.ScrollFixLayoutHelper;
 import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
 import com.sensorsdata.analytics.android.sdk.ScreenAutoTracker;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAutoTrackAppViewScreenUrl;
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 import com.sensorsdata.analytics.android.sdk.util.SensorsDataUtils;
 //import com.sensorsdata.analytics.android.sdk.SensorsDataTrackViewOnClick;
@@ -57,10 +61,18 @@ import cn.sensorsdata.demo.bean.WeChatMessage;
 import cn.sensorsdata.demo.fragment.HomeFragment;
 import cn.sensorsdata.demo.fragment.MineFragment;
 import cn.sensorsdata.demo.fragment.MyFragment;
+import cn.sensorsdata.demo.test.SensorsData;
 
 
 @Route(path = "/demo/activity")
-public class DemoActivity extends AppCompatActivity implements View.OnClickListener,ScreenAutoTracker {
+
+
+
+
+
+
+@SensorsDataAutoTrackAppViewScreenUrl(url="xxx.demo页面")
+public class DemoActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,46 +85,69 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
 
         this.setTitle("商品详情");
 
-        try {
-            SensorsDataAPI.sharedInstance().track("yang",new JSONObject().put("test","$tttt"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // 记录 搜索 事件
-        try {
-            JSONObject properties=new JSONObject();
-            properties.put("keyWord", "神策")//搜索关键词
-                    .put("hasResult",true)//是否有结果
-                    .put("isHistory",true)//是否使用历史词
-                    .put("isRecommendLabel",true)//是否使用推荐标签
-                    .put("recommendLabel","神策");//推荐标签
-            SensorsDataAPI.sharedInstance(this).track("search",properties);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         try {
-            JSONObject properties=new JSONObject();
-            properties.put("$utm_source","渠道来源");//$utm_source 对应着渠道来源
+            String downloadChannel = null;
+            // 获取 <application> 中的 <meta-data>
+            final ApplicationInfo appInfo = this.getPackageManager().getApplicationInfo(getPackageName(),
+                    PackageManager.GET_META_DATA);
+            // 获取下载商店的渠道
+            downloadChannel = appInfo.metaData.getString("YOUR_DOWNLOAD_CHANNEL");
+
+            //初始化我们SDK后 调用这段代码，用于记录安装事件、渠道追踪。
+            JSONObject properties = new JSONObject();
+            properties.put("DownloadChannel", downloadChannel);//这里的 DownloadChannel 负责记录下载商店的渠道。
+            //这里安装事件取名为 AppInstall。
+            //注意 由于要追踪不同渠道链接中投放的渠道，所以 Manifest 中不能按照神策的方式定制渠道，代码中也不能传入 $utm_ 开头的渠道字段！！！
+            SensorsDataAPI.sharedInstance(this).trackInstallation("AppInstall", properties);
+
+            //这里调用profileSetOnce 是为了把老用户的下载渠道纠正到DownloadChannel字段中
             SensorsDataAPI.sharedInstance().profileSetOnce(properties);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        try {
-            // 例如：给 一个 "点赞" 的控件，埋点点击事件(AppClick)。
-            // 为了分析需要, AppClick 事件 的 businessType、screenName、elementName、elementId 这四个属性是必须有的。
-            // 除了这四个必须传的属性，你们可以按需求添加其它自定义属性。
-            JSONObject properties=new JSONObject();
-            properties.put("businessType","加班")//业务类型
-                    .put("screenName","首页")//页面名称
-                    .put("elementName","点赞")//控件名称
-                    .put("elementId","button_home_laud");//控件的ID(android:id="@+id/button_home_laud")
-            SensorsDataAPI.sharedInstance().track("AppClick",properties);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            SensorsDataAPI.sharedInstance().track("yang",new JSONObject().put("test","$tttt"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // 记录 搜索 事件
+//        try {
+//            JSONObject properties=new JSONObject();
+//            properties.put("keyWord", "神策")//搜索关键词
+//                    .put("hasResult",true)//是否有结果
+//                    .put("isHistory",true)//是否使用历史词
+//                    .put("isRecommendLabel",true)//是否使用推荐标签
+//                    .put("recommendLabel","神策");//推荐标签
+//            SensorsDataAPI.sharedInstance(this).track("search",properties);
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            JSONObject properties=new JSONObject();
+//            properties.put("$utm_source","渠道来源");//$utm_source 对应着渠道来源
+//            SensorsDataAPI.sharedInstance().profileSetOnce(properties);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            // 例如：给 一个 "点赞" 的控件，埋点点击事件(AppClick)。
+//            // 为了分析需要, AppClick 事件 的 businessType、screenName、elementName、elementId 这四个属性是必须有的。
+//            // 除了这四个必须传的属性，你们可以按需求添加其它自定义属性。
+//            JSONObject properties=new JSONObject();
+//            properties.put("businessType","加班")//业务类型
+//                    .put("screenName","首页")//页面名称
+//                    .put("elementName","点赞")//控件名称
+//                    .put("elementId","button_home_laud");//控件的ID(android:id="@+id/button_home_laud")
+//            SensorsDataAPI.sharedInstance().track("AppClick",properties);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 
 
@@ -139,19 +174,7 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isSupportJellyBean;
     private FragmentManager fragmentManager=null;
 
-    @Override
-    public String getScreenUrl() {
-        return "first_flash_view";
-    }
 
-    @Override
-    public JSONObject getTrackProperties() throws JSONException {
-        JSONObject properties=new JSONObject();
-        //这里需要判断是从哪个页面跳转过来的，如果是从h5页面跳转过来的需要重写$referrer
-        properties.put("screenName","first_flash_view")
-                .put("$referrer","h5页面名称");
-        return properties;
-    }
 
     private List<android.support.v4.app.Fragment> listPagerViews = null;
     private PagerAdapter pagerAdapter=null;
@@ -335,6 +358,7 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("###","trackTimerBegin");
 
         Toast.makeText(this,"demo",Toast.LENGTH_SHORT).show();
+        ARouter.getInstance().build("/xiaomipush/activity").navigation();
 
     }
 

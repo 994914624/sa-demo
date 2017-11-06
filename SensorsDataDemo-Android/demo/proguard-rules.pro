@@ -79,3 +79,6 @@ public void *(***);
 -keep class com.apptalkingdata.** {*;}
 -keep class dice.** {*; }
 -dontwarn dice.**
+
+
+

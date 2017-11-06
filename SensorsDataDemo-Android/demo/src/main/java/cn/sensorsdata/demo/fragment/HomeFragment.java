@@ -26,17 +26,19 @@ import me.yokeyword.fragmentation.SupportFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements ScreenAutoTracker{
+public class HomeFragment extends Base2Fragment {
 
-    @Override
-    public String getScreenUrl() {
-        return "frag/home";
-    }
 
-    @Override
-    public JSONObject getTrackProperties() throws JSONException {
-        return new JSONObject().put("fragName","home");
-    }
+//    @Override
+//    public String getScreenUrl() {
+//        return "wwwww";
+//    }
+//
+//    @Override
+//    public JSONObject getTrackProperties() throws JSONException {
+//        return null;
+//    }
+
 
     private View view = null;
     public HomeFragment() {
@@ -78,6 +80,12 @@ public class HomeFragment extends Fragment implements ScreenAutoTracker{
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
@@ -156,4 +164,6 @@ public class HomeFragment extends Fragment implements ScreenAutoTracker{
     public void onLowMemory() {
         super.onLowMemory();
     }
+
+
 }

@@ -22,10 +22,8 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -36,8 +34,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAutoTrackAppViewScreenUrl;
 import com.sensorsdata.analytics.android.sdk.SensorsDataTrackEvent;
-import com.sensorsdata.analytics.android.sdk.SensorsDataTrackViewOnClick;
 import com.sensorsdata.analytics.android.sdk.SensorsExpandableListViewItemTrackProperties;
 
 import org.json.JSONException;
@@ -49,12 +47,12 @@ import java.util.List;
 import java.util.Map;
 
 import cn.sensorsdata.demo.R;
-import cn.sensorsdata.demo.YangActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, AdapterView.OnItemClickListener{
+@SensorsDataAutoTrackAppViewScreenUrl(url="xxx.myFrg页面")
+public class MyFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, AdapterView.OnItemClickListener {
 
     ExpandableListView mainlistview = null;
     List<String> parent = null;
@@ -225,7 +223,15 @@ public class MyFragment extends Fragment implements View.OnClickListener, Compou
         RadioButton radioButton02 = (RadioButton)view.findViewById(R.id.yang_radioButton02);
 
         RadioGroup radioGroup = (RadioGroup)view.findViewById(R.id.yang_RadioGroup);
+        RadioGroup radioGroup222 = (RadioGroup)view.findViewById(R.id.radio_group222);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                Toast.makeText(context, "rg" + i, Toast.LENGTH_SHORT).show();
+            }
+        });
+        radioGroup222.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 Toast.makeText(context, "rg" + i, Toast.LENGTH_SHORT).show();
@@ -512,6 +518,16 @@ public class MyFragment extends Fragment implements View.OnClickListener, Compou
 
     }
 
+//    @Override
+//    public String getScreenUrl() {
+//        return "my/fragment";
+//    }
+//
+//    @Override
+//    public JSONObject getTrackProperties() throws JSONException {
+//        return null;
+//    }
+
 
     /*
      *ExpandableListView Adapter
@@ -656,4 +672,15 @@ public class MyFragment extends Fragment implements View.OnClickListener, Compou
 
 
     }
+
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//    }
+//
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//    }
 }

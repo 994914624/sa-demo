@@ -17,15 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.sensorsdata.analytics.android.sdk.ScreenAutoTracker;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.xiaomi.mipush.sdk.MiPushClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
  * 小米推送 Activity
  */
 @Route(path = "/xiaomipush/activity")
-public class XiaomiPushActivity extends Activity {
+public class XiaomiPushActivity extends Activity implements ScreenAutoTracker{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,16 @@ public class XiaomiPushActivity extends Activity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public String getScreenUrl() {
+        return "xiaomi/activity";
+    }
+
+    @Override
+    public JSONObject getTrackProperties() throws JSONException {
+        return null;
     }
 
 

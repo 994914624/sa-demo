@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.igexin.sdk.PushManager;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAutoTrackAppViewScreenUrl;
 import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
@@ -31,6 +32,7 @@ import cn.jpush.android.api.JPushInterface;
  * 代码埋点Activity
  */
 @Route(path = "/code/activity")
+@SensorsDataAutoTrackAppViewScreenUrl(url="xxx.aaa页面")
 public class CodeActivity extends Activity implements View.OnClickListener {
 
     TextView tv_txt = null;
@@ -128,6 +130,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
             properties.put("ProductCatalog", "Laptop Computer");    // 设置商品类别
             properties.put("IsAddedToFav", false);                  // 是否被添加到收藏夹
             SensorsDataAPI.sharedInstance(this).track("ViewProduct", properties);
+            SensorsDataAPI.sharedInstance().flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -165,6 +168,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         String loginId = (int) (Math.random() * (100000 - 11111) + 11111) + "";//这里随机生成11111~99999作为登录Id
         try {
             SensorsDataAPI.sharedInstance(this).login(loginId);
+            //SensorsDataAPI.sharedInstance(this).trackSignUp(loginId);
 
             //由于切换用户，所以每次登录都要发 jgAndroidId 到profile 表
             if(!TextUtils.isEmpty(JPushInterface.getRegistrationID(this))&&!TextUtils.isEmpty(MiPushClient.getRegId(getApplicationContext()))){

@@ -1,4 +1,4 @@
-package cn.sensorsdata.demo;
+package cn.sensorsdata.demo.yang;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 
+import cn.sensorsdata.demo.R;
 import cn.sensorsdata.demo.fragment.Myapp1Fragment;
 import cn.sensorsdata.demo.fragment.Myapp2Fragment;
 

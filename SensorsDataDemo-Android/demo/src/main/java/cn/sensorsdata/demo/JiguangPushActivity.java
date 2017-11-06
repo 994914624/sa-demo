@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAutoTrackAppViewScreenUrl;
 import com.sensorsdata.analytics.android.sdk.SensorsDataTrackViewOnClick;
 
 import butterknife.ButterKnife;
@@ -26,6 +27,7 @@ import cn.jpush.android.api.JPushInterface;
  * 极光推送 Activity
  */
 @Route(path = "/jiguangpush/activity")
+@SensorsDataAutoTrackAppViewScreenUrl(url="xxx.jg页面")
 public class JiguangPushActivity extends Activity {
 
     @Override

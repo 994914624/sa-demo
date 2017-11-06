@@ -1,4 +1,4 @@
-package cn.sensorsdata.demo;
+package cn.sensorsdata.demo.yang;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+
+import cn.sensorsdata.demo.R;
 
 
 @Route(path = "/yangfrag/activity")

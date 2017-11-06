@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+
+//添加 com.sensorsdata.analytics.android 插件
+apply plugin: 'com.sensorsdata.analytics.android'
+
+
 apply plugin: 'kotlin-android'
 //应用 Bugtags 插件
 apply plugin: 'com.bugtags.library.plugin'
@@ -6,8 +11,6 @@ apply plugin: 'com.bugtags.library.plugin'
 //apply plugin: 'realm-android'
 //lambda
 //apply plugin: 'me.tatarka.retrolambda'
-//添加 com.sensorsdata.analytics.android 插件
-apply plugin: 'com.sensorsdata.analytics.android'
 
 //greendao
 apply plugin: 'org.greenrobot.greendao'
@@ -28,10 +31,19 @@ repositories {
     mavenCentral()
 }
 
+
+sensorsAnalytics {
+    excludeJarFilter 'imsdk'
+}
+
 //sensorsAnalytics {
 //    includeJarFilter 'SensorsAnalyticsSDK-Beta', 'com.android.support'
 //}
 
+
+sensorsAnalytics {
+    includeJarFilter 'bcmpt','cls','imlib','intimacy','mine'
+}
 
 android {
     compileSdkVersion 25
@@ -42,9 +54,10 @@ android {
     defaultConfig {
         applicationId "cn.sensorsdata.demo"
         minSdkVersion 9
-        targetSdkVersion 19
+        targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
+
 
         //ARouter
         javaCompileOptions {
@@ -77,6 +90,17 @@ android {
         //gio
         resValue("string", "growingio_project_id", "9c1310e01a950506")
         resValue("string", "growingio_url_scheme", "growing.32c9d0e25e58b502")
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+
+                // Clang是一个C语言、Objective-C、C++语言的轻量级编译器。
+                //arguments "-DANDROID_TOOLCHAIN=clang"
+                // 生成.so库的目标平台
+                abiFilters "armeabi-v7a", "armeabi", "x86"
+            }
+        }
     }
     buildTypes {
         release {
@@ -102,6 +126,8 @@ android {
 
         }
         debug {
+            //minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'API_SERVER_URL', '"https://www.sensorsdata.cn/manual/android_sdk_autotrack.html"'
 
         }
@@ -127,6 +153,11 @@ android {
         buildConfigField 'String', 'API_SERVER_URL', '"https://www.sensorsdata.cn/manual/android_sdk_autotrack.html"'
     }
 
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
 
 }
 
@@ -143,9 +174,11 @@ dependencies {
     })
     //xiaomi
     compile files('libs/MiPush_SDK_Client_3_2_1.jar')
-
     //添加 Sensors Analytics SDK 依赖
-    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.7.15'
+//    compile('com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.8') {
+//        exclude group: "com.android.support", module: "appcompat-v7"
+//    }
+    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.9'
     compile(name: 'SensorsAnalyticsSDK-release', ext: 'aar')
     //crashlytics
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
@@ -158,41 +191,45 @@ dependencies {
     //kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     //v7
-    compile 'com.android.support:appcompat-v7:23.1.1'
     //jiguang
-    compile 'cn.jiguang.sdk:jpush:3.0.0'
-    compile 'cn.jiguang.sdk:jcore:1.0.0'
     //umeng
-    compile 'com.umeng.analytics:analytics:latest.integration'
     //getui
-    compile 'com.getui:sdk:2.10.2.0'
     //greendao
-    compile 'org.greenrobot:greendao:3.2.2'
     // litepal
-    compile 'org.litepal.android:core:1.5.1'
     //multidex
-    compile 'com.android.support:multidex:1.0.1'
     //compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:25.3.1'
-    testCompile 'junit:junit:4.12'
     //ButterKnife
-    compile 'com.jakewharton:butterknife:8.7.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
-
     //Lambda
     //retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.1'
     //ARouter
-    compile 'com.alibaba:arouter-api:1.2.1.1'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
     //Fragmentation
-    compile 'me.yokeyword:fragmentation:1.0.7'
     //leakcanary
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     //gio
-    compile 'com.growingio.android:vds-android-agent:0.9.103@aar'
     //talkingdata
     compile files('libs/TalkingdataAnalytics.jar')
-
+    //permission
+    compile files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
+    //compile files('libs/imsdk.jar')
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:support-v4:23.0.0'
+    compile 'cn.jiguang.sdk:jpush:3.0.0'
+    compile 'cn.jiguang.sdk:jcore:1.0.0'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.getui:sdk:2.10.2.0'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'org.litepal.android:core:1.5.1'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.jakewharton:butterknife:8.7.0'
+    compile 'com.alibaba:arouter-api:1.2.1.1'
+    compile 'me.yokeyword:fragmentation:1.0.7'
+    compile 'com.growingio.android:vds-android-agent:0.9.103@aar'
+    compile 'com.yanzhenjie:permission:1.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
 }
 
 //----------crashlytics-----------

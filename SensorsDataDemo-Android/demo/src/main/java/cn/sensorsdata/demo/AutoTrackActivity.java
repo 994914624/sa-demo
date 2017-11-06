@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppClick;
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreenAndAppClick;
@@ -47,6 +49,7 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
         if (Build.VERSION.SDK_INT>11)setActionBar();
         initView();
         initListView();
+
 
     }
 
@@ -242,6 +245,8 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
          sv_auto = (ScrollView) findViewById(R.id.scrollView_autotrack);
         sv_auto.smoothScrollTo(0, 0);
         ListView listView= (ListView) findViewById(R.id.listView_autotrack);
+        //ListView这种忽略无效
+        //SensorsDataAPI.sharedInstance().ignoreView(listView);
         String [] arr={"item0","item1","item2","item3","item4","item5","item6","item7","item8","item9"};
         listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,arr));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

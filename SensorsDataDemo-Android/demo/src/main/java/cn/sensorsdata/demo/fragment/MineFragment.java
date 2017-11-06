@@ -15,19 +15,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sensorsdata.analytics.android.sdk.ScreenAutoTracker;
-import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.sensorsdata.demo.R;
+import cn.sensorsdata.demo.yang.YangSingleActivity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 //@SensorsDataIgnoreTrackAppViewScreen
-public class MineFragment extends HomeFragment implements View.OnClickListener, AdapterView.OnItemClickListener,ScreenAutoTracker {
+public class MineFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener,ScreenAutoTracker {
 
 
     private View view = null;
@@ -93,6 +93,8 @@ public class MineFragment extends HomeFragment implements View.OnClickListener, 
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"bb", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getActivity(), YangSingleActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }

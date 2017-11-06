@@ -16,6 +16,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <RadioGroup
+                android:id="@+id/radio_group222"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="领域分布" />
+
+                <RadioButton
+                    android:id="@+id/rb_middle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="轮次分布" />
+
+                <RadioButton
+                    android:id="@+id/rb_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="投资趋势" />
+            </RadioGroup>
+
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchCompat"
                 android:layout_width="wrap_content"

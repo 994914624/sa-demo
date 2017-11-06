@@ -1,7 +1,6 @@
-package cn.sensorsdata.demo;
+package cn.sensorsdata.demo.yang;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +23,7 @@ import android.widget.TabWidget;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.sensorsdata.analytics.android.sdk.ScreenAutoTracker;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
 import org.json.JSONException;
@@ -31,12 +31,14 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sensorsdata.demo.R;
+import cn.sensorsdata.demo.bean.TestNDK;
 import cn.sensorsdata.demo.bean.TestToJS;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 
 @Route(path = "/yangtab2/activity")
-public class YangTab2Activity extends AppCompatActivity {
+public class YangTab2Activity extends AppCompatActivity implements ScreenAutoTracker {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class YangTab2Activity extends AppCompatActivity {
                 .setContent(R.id.view3));
 
         tabHost.addTab(tabHost.newTabSpec("tab2")
-                .setIndicator("tab2")
+                .setIndicator(TestNDK.myMethodString())
                 .setContent(R.id.view2));
 
         /**
@@ -116,12 +118,13 @@ public class YangTab2Activity extends AppCompatActivity {
     @TargetApi(11)
     private void initWebView() {
         webView = new WebView(getApplicationContext());
+
         // 打通H5
-        try {
-            SensorsDataAPI.sharedInstance().showUpWebView(webView,false,new JSONObject().put("platform","Android-H5"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            SensorsDataAPI.sharedInstance().showUpWebView(webView,false,new JSONObject().put("platform","Android-H5"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         ll_webview_container = (LinearLayout) findViewById(R.id.ll_webView_container);
 
         ll_webview_container.addView(webView);
@@ -226,8 +229,8 @@ public class YangTab2Activity extends AppCompatActivity {
         webView.addJavascriptInterface(new TestToJS(this),"test");
 
         //webView.loadUrl("http://www.baidu.com");
-        webView.loadUrl("file:///android_asset/JS_SDK_test.html");
-        //webView.loadUrl("file:///android_asset/buttons.html");
+        //webView.loadUrl("file:///android_asset/JS_SDK_test.html");
+        webView.loadUrl("http://60.191.59.19:7070/PerMobileServerPro/weixindemo.html");
 
     }
 
@@ -254,5 +257,15 @@ public class YangTab2Activity extends AppCompatActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public String getScreenUrl() {
+        return "yang/tab2Activity";
+    }
+
+    @Override
+    public JSONObject getTrackProperties() throws JSONException {
+        return null;
     }
 }
