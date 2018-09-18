@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/actionbar_def_style</item>
+    </style>
+
+    <!-- ActionBar的背景颜色 -->
+    <style name="actionbar_def_style" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#1bb17b</item>
+        <item name="android:titleTextStyle">@style/AcBar_titleStyle</item>
+        <item name="android:homeAsUpIndicator">@mipmap/left_back</item>
+    </style>
+    <!-- ActionBar字体的颜色及大小 -->
+    <style name="AcBar_titleStyle">
+
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

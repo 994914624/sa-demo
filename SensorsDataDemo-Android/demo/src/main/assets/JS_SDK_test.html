@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+	/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>Hello APP</title>
+	
+	<style>
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+		}
+		
+		#wrap {
+			height: 100%;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-flex-flow: column;
+			flex-flow: column;
+		}
+		
+		.topbar {
+			background: #f1f1f1;
+			height: 50px;
+			border-bottom: 1px solid #fff;
+			line-height: 50px;
+			text-align: center;
+			color: #323237;
+			margin: 10px;
+		}
+		
+		.headerbar {
+			height: 80px;
+			line-height: 80px;
+			color: #fff;
+			font-size: 25px;
+			background: #1BB17B;
+		}
+	</style>
+
+
+
+
+<script>
+(function(para) {
+  var p = para.sdk_url, n = para.name, w = window, d = document, s = 'script',x = null,y = null;
+  w['sensorsDataAnalytic201505'] = n;
+  w[n] = w[n] || function(a) {return function() {(w[n]._q = w[n]._q || []).push([a, arguments]);}};
+  var ifs = ['track','quick','register','registerPage','registerOnce','clearAllRegister','trackSignup', 'trackAbtest', 'setProfile','setOnceProfile','appendProfile', 'incrementProfile', 'deleteProfile', 'unsetProfile', 'identify','login','logout','trackLink','clearAllRegister'];
+  for (var i = 0; i < ifs.length; i++) {
+    w[n][ifs[i]] = w[n].call(null, ifs[i]);
+  }
+  if (!w[n]._t) {
+    x = d.createElement(s), y = d.getElementsByTagName(s)[0];
+    x.async = 1;
+    x.src = p;
+    y.parentNode.insertBefore(x, y);
+    w[n].para = para;
+  }
+})({
+  sdk_url: 'https://static.sensorsdata.cn/sdk/1.9.4/sensorsdata.min.js',
+  name: 'sa',
+  //打通App和H5
+  use_app_track:true,
+  debug_mode:false,
+  heatmap:{},
+  server_url: 'http://sdk-test.cloud.sensorsdata.cn:8006/sa?project=yangzhankun&token=95c73ae661f85aa0'
+});
+
+sa.quick('autoTrack');
+
+
+sa.track("JS_event_1",{a:1,b:"神策JS"});
+
+
+</script>
+
+
+</head>
+
+<body>
+	<div id="wrap">
+		<header>
+			<span data-v-5f80fcbc class="return-button">
+					<span data-v-5f80fcbc class="return-button-left" style="border-right-color: rgb(58, 58, 58);"></span>
+					<span data-v-5f80fcbc class="return-button-right" style="border-right-color: rgb(255, 255, 255);"></span>
+			</span>
+		</header>
+		<section>
+
+			<div id="login" class="topbar">
+				login
+			</div>
+			<div id="track" class="topbar">
+				track
+			</div>
+			<div id="setProfile" class="topbar">
+				setProfile
+			</div>
+			<div id="setOnceProfile" class="topbar">
+				setOnceProfile
+			</div>
+			<div id="appendProfile" class="topbar">
+				appendProfile
+			</div>
+			<div id="incrementProfile" class="topbar">
+				incrementProfile
+			</div>
+			<div id="deleteProfile" class="topbar">
+				deleteProfile
+			</div>
+			<div id="unsetProfile" class="topbar">
+				unsetProfile
+			</div>
+			<div id="appPass" class="topbar">
+				app传值
+			</div>
+			<div id="identify" class="topbar">
+				identify
+			</div>
+			<div id="logout" class="topbar">
+				logout
+			</div>
+
+			<div id="flush" class="topbar">
+				事件
+			</div>
+			<a href="yang://www">打开神策Demo</a>
+			<br/>
+			<a href="sa8e29687b://heatmap">打开神策</a>
+			<br/>
+			<a href="sa855c87b4://heatmap">打开App</a>
+			<!--&lt;!&ndash;<div >&ndash;&gt;-->
+			<!--&lt;!&ndash;<a href="weixin://dl/moments">微信朋友圈</a>&ndash;&gt;-->
+			<!--&lt;!&ndash;</div>&ndash;&gt;-->
+			<!--&lt;!&ndash;<div >&ndash;&gt;-->
+			<!--&lt;!&ndash;<a href="weixin://dl/">启动</a> &ndash;&gt;-->
+			<!--</div>-->
+		</section>
+	</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+
+		//login
+		document.getElementById("login").onclick = function () {
+			//alert("login");
+			sa.login("user789");
+		}
+		//track事件
+		document.getElementById("track").onclick = function () {
+			//alert("track");
+			//sa.track("JS_event",{a:1,b:"神策JS",$model:"666"});
+
+		//console.log("### js console ###");
+		//console.log(sa.getAppStatus().distinct_id);
+
+        console.log("track ###");
+
+		console.log("track ###2"+sa);
+
+		sa.track("JS_event_2");
+		sa.quick('autoTrack');
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!--//获取匿名ID-->
+			<!--sa.store.getDistinctId()-->
+
+			<!--&lt;!&ndash;test.javaMethod("今天周几了");&ndash;&gt;-->
+
+			<!--console.log(test.getAppDistinctID());-->
+
+			<!--var obj = eval('(' + test.getAppDistinctID() + ')');-->
+			<!--//替换成App端的用户标识ID-->
+    		<!--sa.identify(obj.distinct_id);-->
+    		<!--//给H5页面设置平台类型的公共属性，用于区分是Android内还是iOS内的H5-->
+    		<!--sa.register({Platform:obj.Platform});-->
+			<!--console.log(obj+"###");-->
+
+			<!--test.getAppDistinctID(function(app_info){-->
+    				<!--//替换成App端的用户标识ID-->
+    				<!--sa.identify(obj.distinct_id);-->
+    				<!--//给H5页面设置平台类型的公共属性，用于区分是Android内还是iOS内的H5-->
+    				<!--sa.register({Platform:obj.Platform});-->
+			<!--});-->
+
+
+			<!--//约定的url协议为：js://webview?arg1=111&arg2=222 呈递给shouldOverrideUrlLoading 做判断-->
+            <!--document.location = "https://www.baidu.com";-->
+            <!--// 调用prompt（） 呈递给 onJsPrompt 做处理-->
+    		<!--prompt("js://demo2?arg=111&arg2=222");-->
+		}
+		//setProfile
+		document.getElementById("setProfile").onclick = function () {
+			//alert("setProfile");
+			sa.setProfile({a:1,b:"你"});
+		}
+		//setOnceProfile
+		document.getElementById("setOnceProfile").onclick = function () {
+			//alert("setOnceProfile");
+			sa.setOnceProfile({a:1,b:"你"});
+		}
+		//appendProfile
+		document.getElementById("appendProfile").onclick = function () {
+			alert("appendProfile");
+			sa.appendProfile({catrgory: '玉米'});
+		}
+		//incrementProfile
+		document.getElementById("incrementProfile").onclick = function () {
+			alert("incrementProfile");
+			sa.incrementProfile({buyTime:2});
+		}
+		//deleteProfile
+		document.getElementById("deleteProfile").onclick = function () {
+			alert("deleteProfile");
+			sa.deleteProfile();
+		}
+		//unsetProfile
+		document.getElementById("unsetProfile").onclick = function () {
+			alert("unsetProfile");
+			sa.unsetProfile(["name","sex"]);
+		}
+
+		//app传值
+		document.getElementById("appPass").onclick = function () {
+			alert("appPass");
+				sa.getAppStatus(function(app_info){
+
+    			// 跟踪事件
+    			sa.track("ViewHomePage",{"platform":app_info.platform});
+				});
+				sa.register({abc:"公共属性"});
+		}
+
+		//identify
+		document.getElementById("identify").onclick = function () {
+			alert("identity");
+				sa.identity("12345678");
+		}
+		//logout
+		document.getElementById("logout").onclick = function () {
+			alert("logout");
+				sa.logout();
+		}
+		
+</script>
+
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView_code"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="代码埋点" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/textView_vt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="可视化埋点" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/textView_autotrack"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="全埋点" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/textView_jg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="极光推送" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/textView_xm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="小米推送" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/textView_gt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="个推" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/textView_yang"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:drawableRight="@mipmap/right_arrow"
+        android:layout_marginRight="10dp"
+        android:text="调试" />
+    <View
+        android:background="#bab8b8"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+</LinearLayout>

@@ -1,0 +1,443 @@
+
+Release 2.0.2
+1、修复 $AppClick 时 ListView 没有 $element_id 属性的问题；
+
+Release 2.0.1
+1、新增 API ignoreView(View view, boolean ignore)，可以取消忽略某个 View 的点击事件采集；
+2、新增 API login(final String loginId , final JSONObject properties)，login 支持添加自定义属性；
+3、新增 API registerDynamicSuperProperties(SensorsDataDynamicSuperProperties dynamicSuperProperties)，支持添加动态公共属性；
+4、其它部分代码的优化。
+
+
+Release 2.0.0（增加消息队列,不能覆盖$device_id，， 2.00——2.02 trackTimerBegin 高并发有问题）
+1、新增接口：deleteAll，支持 GDPR；
+2、新增接口：setCookie(final String cookie, boolean encode)，支持 flush 时设置 http 的 cookie；
+3、$carrier 支持全球运营商；
+4、优化任务队列，确保事件顺序正确；
+5、修复属性值过长没有被截取的问题；
+6、修改数据库名称，防止数据库被误删（老数据库自动迁移）；
+7、修复子线程 crash 时可能会触发两次 $AppEnd 事件的问题；
+8、修改点击图 RadioButton 无法渲染的问题；
+9、支持 ImageView 的 ContentDescription 作为 $element_content;
+10、国内运营商的获取支持中国卫通、中国铁通；
+11、全面支持神策插件 2.0.0;
+
+
+Release 1.10.7 （SQL）
+1、优化 ContentProvider 的 delete 方法
+
+
+Release 1.10.6
+1、删除可视化埋点相关的代码
+2、新增 trackTimerStart
+3、优化其他相关代码
+
+Release 1.10.5
+1、匿名 ID 默认使用 AndroidId
+
+
+Release 1.10.4 (解决 trackTimerBegin 高并发，UUID为匿名ID)
+1、默认匿名 ID 改为 AndroidId；
+2、H5 与 App 打通时，支持指定事件发送到哪个 project（包括 token）；
+3、3、优化其他代码。
+
+Release 1.10.3
+1、代码埋点支持指定事件发送到哪个 project（包括 token）
+2、优化H5 与 App 打通的验证逻辑
+3、优化其他相关代码
+
+
+Release 1.10.2 (Android.conf)
+1、优化
+
+
+Release 1.10.1(修复是否首日（$is_first_day，SDK 单例防止空指针)
+1、支持在线控制 SDK，目前支持的控制如下:
+A：在线关闭 debug 模式
+B：在线打开/关闭 SDK
+C：在线打开/关闭 AutoTrack（全埋点）
+2、支持采集 GPS 信息（功能默认关闭，公共属性：$latitude、$longitude）
+3、支持采集当前设备方向（功能默认关闭，公共属性：$screen_orientation）
+4、修复是否首日（$is_first_day）可能出现判断不准的问题（App 有 Service 相关）
+5、修复 AppCrashed 事件中的 app_crashed_reason 属性指太长会被截断的问题
+6、其他部分逻辑优化
+
+
+
+
+Release 1.10.0（Timer OOM 版本回退了）
+1、支持在线控制 SDK（需要配合神策分析1.11版本使用），目前支持的控制如下：
+1）、在线关闭 debug 模式
+2）、在线打开/关闭 SDK
+后续会支持更多的在线控制，敬请期待～
+
+Release 1.9.6
+1、查看 App 点击图时，通过接口可以设置是否弹出确认框
+
+Release 1.9.5
+1、强制设置 AlertDialog Button 的文字颜色，防止因为 colorAccent 设置为 white 导致无法看到按钮
+
+Release 1.9.4（修复$first_visit_time）
+1、优化获取 $carrier 的逻辑，防止由于权限问题无法及时获取；
+2、优化部分代码，防止出现 NPE
+
+Release 1.9.3
+1、优化 H5 与 App 打通，防止引用第三方 H5 时数据串的问题
+
+Release 1.9.2 （减少埋点耗时）
+1、Fix 连续 track 事件时，时间戳可能相同的 bug
+2、优化埋点，减少埋点耗时
+
+Release 1.9.1
+1、AAR 内置混淆配置
+2、修复 App 点击图可能会出现的 NPE 问题(ViewOnClickAppClick
+)
+3、修复 TextView 可能无法触发 $AppClick 事件的问题
+4、修复 “org.json.JSONException: No value for $screen_name” 的问题
+ 
+
+Release 1.9.0
+1、支持 App 点击图（beta版）
+
+
+Release 1.8.18(预置属性完善)
+1、JSONObject getPresetProperties 接口不返回 distinct_id
+
+
+
+Release 1.8.17(enableVerify  js 1.9.7)
+1、JSONObject getPresetProperties 接口不返回 time 属性
+2、新增接口：public void showUpWebView(WebView webView, boolean isSupportJellyBean, boolean enableVerify)，用于H5 与 App 打通时，可以对事件进行基本的校验是否接收
+3、Fix debug 模式下可能会出现 cannot parse JSON 的问题
+4、App 接收 H5 传过来的事件时 remove 掉 _nocache 属性
+5、优化其他部分代码
+
+
+Release 1.8.16 (新增预置属性API)
+1、添加接口：public JSONObject getPresetProperties()；返回预置属
+
+
+
+
+https://github.com/sensorsdata/sa-sdk-android/releases/tag/v1.8.15
+Release 1.8.15（修复X5 addJavaInterface）
+1、优化部分代码
+
+
+Release 1.8.14（修复NPE SensorsDataRuntimeBridge.onViewOnClick）
+1、新增初始化函数：public static SensorsDataAPI sharedInstance(Context context, String serverURL, DebugMode debugMode);
+2、减少 SDK 集成步骤，将 SDK 所属权限已放到 AndroidManifest.xml 中;
+3、$lib_detail 属性值支持覆盖;
+4、新增接口：public void setServerUrl(String serverUrl);
+5、优化 debugMode 提示框策略（智能关闭 debugMode 及支持在线关闭 debugMode），防止意外开启 debugMode 上线;
+6、调用 trackInstallation 时，profile 新增 $first_visit_time 属性，与 JS SDK 保持一致;
+7、优化其他部分代码;
+
+Release 1.8.13
+1、优化 $AppStart 部分逻辑
+
+Release 1.8.12(又主线程埋点了)
+1、支持采集 App 崩溃日志：trackAppCrash()
+
+
+
+Release 1.8.11
+1、新增接口：clearReferrerWhenAppEnd()
+2、暴露接口：trackEventFromH5(String eventInfo)
+
+
+
+
+Release 1.8.10
+1、优化和调整 Fragment 的 $AppViewScreen 采集策略
+【使用方法】：
+在 BaseFragment 上添加注解 SensorsDataTrackFragmentAppViewScreen, 并在 BaseFragment 里重写下面三个方法：
+1）：public void onResume()；
+2）：public void setUserVisibleHint(boolean isVisibleToUser)；
+3）：public void onHiddenChanged(boolean hidden)；
+
+
+Release 1.8.9
+1、新增如下方法，支持关闭渠道匹配的回调请求 public void trackInstallation(String eventName, JSONObject properties, boolean disableCallback);
+
+
+Release 1.8.8
+1、Fix trackInstallation 获取 $utm_ 属性时的 bug
+
+Release 1.8.7
+1、优化 H5 与 App 打通，统一使用客户端时间
+
+
+
+
+Release 1.8.6 （分离RunTime）
+1、优化获取运营商逻辑
+2、H5 与 App 打通支持 x5
+3、调整部分代码框架
+
+
+Release 1.8.5
+1、分离出 AOP 相关的代码到 SensorsAnalyticsSDK-Runtime 模块
+
+
+Release 1.8.0
+1、优化 crc 校验
+2、在 AndroidManifest.xml 中配置的 $utm_ 属性支持整数类型
+
+
+Release 1.7.15
+1、打通 H5 与 App 支持 login
+2、优化获取 mac 地址的逻辑
+
+
+Release 1.7.14
+
+1、$AppClick 事件支持 React Native
+2、checkSelfPermission 兼容 Android 6.0
+3、优化其他部分逻辑
+
+Release 1.7.13
+1、优化 ContentProvider
+
+Release 1.7.12
+1、升级 org.aspectj:aspectjrt 版本到 1.8.10
+2、修改 ContentProvider 的 exported 属性为 false
+
+
+Release 1.7.11
+1、同步数据时添加 crc 校验
+2、Fix ContentProvider 可能出现 ANR 的问题
+
+
+Release 1.7.10
+1、增强打通 H5 与 App 的能力，H5 事件会直接走 App SDK 相关接口，解决了 H5 事件中的 distinct_id 不正确、设备基本信息不正确、H5 事件没有 App 端设置的公共属性、H5 事件易丢失等问题
+2、AutoTrack 支持 android.support.v4.app.Fragment 的 $AppViewScreen 事件
+3、优化其他部分代码
+
+Release 1.7.9       
+_track_id     _flush_time
+1、$AppClick 支持 TabHost 控件
+2、增强 $AppClick 对自定义 View 的采集能力
+3、$AppClick 支持获取 View 所属哪个 Fragment（努力获取，但不保证能获取到）
+4、对统计时长事件中的 event_duration 属性添加过滤条件[0, 24小时]，防止终端时间不准确导致的 event_duration 非常非常大或为负数
+5、统计时长 event_duration 精确到小数点后三位，避免单位力度过大导致为0的情况
+6、优化统计时长 event_duration 的计算规则，现在使用 SystemClock.elapsedRealtime() 计算，避免用户修改手机时间导致 event_duration 计算结果不正确
+7、修复部分控件点击时($AppClick)无法获取所属 Activity 的问题（ContextWrapper）
+8、添加 setViewActivity(View view, Activity activity) 接口，可以设置 view 所属 Activity
+9、添加 trackViewScreen(Activity activity )接口，可以手动 track Activity 的 $AppViewScreen
+事件
+10、忽略某个 Activity 的 $AppViewScreen 事件，可以直接在 Activity 使用注解 @sensorsdataignoretrackappviewscreen
+
+
+Release 1.7.8
+1、添加接口：disableAutoTrack
+2、默认关闭对 Butterknife @OnClick 注解的支持
+
+
+Release 1.7.7
+1、minSdkVersion 从 11 降到 9
+
+
+
+Release 1.7.5
+1、统计时长的event_duration属性精确到小数点后3位
+2、$AppClick事件，允许通过自定义属性覆盖$element_content 和 $element_type
+3、优化其他代码
+
+
+Release 1.7.4
+1、添加接口：void setMaxCacheSize(long maxCacheSize)，可以设置本地最大缓存
+2、优化统计时长接口，统一使用：trackTimerBegin、trackTimerEnd
+3、优化其他代码
+
+
+Release 1.7.3
+1、使用 ContentProvider 访问 sqlite3
+2、优化多进程处理逻辑，只有主进程才会触发 $AppStart、$AppEnd 及 flush
+3、优化 log 机制
+
+
+Release 1.7.2
+1、新增接口 public void setFlushNetworkPolicy(int networkType)，可以设置 flush 时的网络策略，默认情况下，3G／4G／WI-FI 环境下，SDK 都会尝试去 flush
+2、优化本地缓存的事件达到上限之后的缓存策略
+3、所有接口不再 throws Exception
+4、删除public void filterAutoTrackActivity(Class activity)和public void filterAutoTrackActivities(List> activitiesList)，使用 ignoreAutoTrackActivity(activity) 、ignoreAutoTrackActivities(activitiesList)代替
+
+
+Release 1.7.1
+1、AutoTrack 支持 $AppClick
+2、新增 public void enableAutoTrack(List eventTypeList) 方法，开启AutoTrack时，可以指定追踪哪些 AutoTrack 事件
+3、默认的 public void enableAutoTrack() 不采集 $AppClick事件（兼容老版本）
+
+
+
+
+Release 1.6.41
+
+1、支持通过接口控制忽略 AutoTrack 中的部分事件类型($AppStart、$AppEnd、$AppViewScreen)
+public void ignoreAutoTrackEventType(AutoTrackEventType autoTrackEventType);
+2、优化相关权限的动态判断
+3、优化其他代码
+
+
+
+
+
+
+Release 1.6.40
+
+1、支持将AndroidId配置为默认匿名ID
+<meta-data android:name="com.sensorsdata.analytics.android.AndroidId" android:value="true"/>
+2、debug模式下，可以通过配置出错时不显示Toast提示
+<meta-data android:name="com.sensorsdata.analytics.android.ShowDebugInfoView" android:value=“false” />
+3、优化其它代码
+
+Release 1.6.39
+1、Fix 渠道追踪模糊匹配时可能无法获取 UA 值的 bug
+2、开启 debugMode，事件校验或 flush 有问题时，会以 Toast 提示开发者
+3、优化其他代码
+
+
+
+
+
+
+Release 1.6.37
+1、优化 trackTimer
+2、Fix debug 模式下，开启飞行模式丢弃数据的问题
+
+
+
+
+Release 1.6.36
+1、Fix Android 模糊匹配的 bug
+2、通过 registerSuperProperties 替换 $app_version时，同时也更新 lib 节点下的 $app_version 属性
+3、优化代码
+
+Release 1.6.34
+1、Remove tools:ignore="AllowBackup"
+2、showUpWebView 添加 is_login 标识
+
+
+
+Release 1.6.33
+1、调用trackInstallation的时候，会尝试读取macAddress、IMEI、AndroidID，
+会把这些信息放到$ios_install_source属性里（适配今日头条内推广app）。
+
+
+Release 1.6.31
+1、添加渠道追踪
+2、AutoTrack中的$AppViewScreen事件添加$title属性
+a、首先读取activity.getTitle()
+b、如果使用actionBar，并且actionBar.getTitle()不为空，
+	则actionBar.getTitle()覆盖activity.getTitle()
+c、如果a和b都没有读到title，则获取activity的android:label属性
+
+
+Release 1.6.30
+1、Fix运营商名称前面有空格的bug
+
+
+Release 1.6.29
+1、优化连接可视化埋点模拟器的重连机制
+
+
+Release 1.6.28
+1、Fix 多次调用registerSuperProperties 属性相互覆盖的bug
+
+
+Release 1.6.27
+1、修改Log Level，部分ROM默认无法打印Log.d和Log.v
+2、整理demo
+3、添加$is_first_day公共属性(是否首日访问)
+4、添加重置默认匿名id接口：resetAnonymousId()
+
+
+Release 1.6.25
+1、Fix flush()时，当responseCode=400时，无法读取错误信息
+
+
+Release 1.6.24
+1、优化flush时对网络的判断条件
+
+Release 1.6.23
+1、开启SDK debug模式，弹出Toast提示
+2、新增filterAutoTrackActivities(List activitiesList)接口，可以指定部分页面不被AutoTrack
+3、新增getAnonymousId()接口，用来代替getDistinctId()接口(@Deprecated)
+4、新增login(String loginId)和logout，trackSignUp(String newDistinctId)标记为过时(@Deprecated)
+5、优化trackInstallation，确保不会重复调用
+
+
+Release 1.6.22
+1、优化代码
+
+
+Release 1.6.21
+1、优化连接模拟器流程
+
+
+Release 1.6.20
+1、Fix 获取NetworkType 缺少下面两种情况的bug：
+TelephonyManager.NETWORK_TYPE_1xRTT
+TelephonyManager.NETWORK_TYPE_IDEN
+2、Fix 页面onStop都会flush的bug
+
+
+Release 1.6.19
+1、Fix trackTimer 时间不准动bug
+
+
+Release 1.6.18
+1、修复关闭AutoTrack还会发送$AppEnd事件的bug
+
+
+Release 1.6.17
+1、showUpWebView 支持添加自定义属性
+2、优化$AppStart和$AppEnd事件
+
+
+Release 1.6.16
+1、捕获addJson异常
+
+
+Release 1.6.15
+1、添加trackViewScreen，可以通过代码埋点track $AppViewScreen事件
+2、添加filterAutoTrackControllers，允许用户添加ViewController不被AutoTrack
+3、添加getLastScreenUrl，用来获取上个页面的url
+4、添加getLastScreenTrackProperties，用来获取上个页面用户自定义属性
+5、优化代码
+
+
+Release 1.6.14
+1、$AppViewScreen事件添加$url属性
+
+
+Release 1.6.13
+1、使用HttpUrlConnection代替HttpClient，可以复用连接。
+
+
+Release 1.6.12
+1、重命名ScreenAutoTracker的getUrl()为getScreenUrl()
+2、没有开启可视化埋点功能不去获取config信息
+
+——————————————————————————————————————————
+
+trackInstallation方法统计的是，所有集成了神策SDK的APP的个数（旧的APP版本会有一次trackInstallation，新发布的APP版本会有一次trackInstallation）
+
+As I know, we can't use both tools:replace and tools:ignore. So you might remove one from your AndroidManifest.xml declaration.
+
+
+ compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.6.36'
+
+
+
+
+
+
+
+
+
+
+Error:Execution failed for task ':demo:processDebugManifest'.
+> Manifest merger failed : uses-sdk:minSdkVersion 9 cannot be smaller than version 11 declared in library [com.android.support:animated-vector-drawable:25.3.1] /Users/yang/app-sdk/android/demo/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.3.1/AndroidManifest.xml
+  	Suggestion: use tools:overrideLibrary="android.support.graphics.drawable.animated" to force usage

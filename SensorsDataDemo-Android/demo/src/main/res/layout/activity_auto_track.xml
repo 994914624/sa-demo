@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_auto_track"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="1dp"
+    tools:context="cn.sensorsdata.demo.AutoTrackActivity">
+
+
+    <ScrollView
+        android:id="@+id/scrollView_autotrack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <Button
+                android:id="@+id/button_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
+            <TextView
+                android:id="@+id/textView_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="TextView" />
+
+            <ImageView
+                android:id="@+id/imageView_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@mipmap/sensorsdata" />
+
+            <CheckBox
+                android:id="@+id/checkBox_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="CheckBox" />
+
+            <RadioButton
+                android:id="@+id/radioButton_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="RadioButton" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton_autotrack"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <RatingBar
+                android:id="@+id/ratingBar_autotrack"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <SeekBar
+                android:id="@+id/seekBar_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <cn.sensorsdata.demo.MyListView
+                android:id="@+id/listView_autotrack"
+                android:layout_width="match_parent"
+                android:layout_height="500dp">
+            </cn.sensorsdata.demo.MyListView>
+        </LinearLayout>
+    </ScrollView>
+    <TextView
+        android:background="@mipmap/down"
+        android:id="@+id/textView_bg"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:text="点击可查看全埋点,$AppClick事件属性，以TextView示例"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/imageView_bg"
+        android:scaleType="fitXY"
+        android:src="@mipmap/auto_bg"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

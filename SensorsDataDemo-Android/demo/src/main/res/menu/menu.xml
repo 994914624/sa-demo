@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/action_1"
+        android:orderInCategory="101"
+        app:showAsAction="ifRoom|withText"
+        android:title="DEBUG_ONLY"/>
+    <item
+        android:id="@+id/action_2"
+        android:orderInCategory="102"
+        app:showAsAction="ifRoom|withText"
+        android:title="DEBUG_AND_TRACK">
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/action_reg_phone"-->
+                <!--android:orderInCategory="201"-->
+                <!--app:showAsAction="never"-->
+                <!--android:title="手机注册"/>-->
+            <!--<item-->
+                <!--android:id="@+id/action_reg_email"-->
+                <!--android:orderInCategory="202"-->
+                <!--app:showAsAction="never"-->
+                <!--android:title="邮箱注册"/>-->
+        <!--</menu>-->
+    </item>
+    <item
+        android:id="@+id/action_3"
+        android:orderInCategory="103"
+        app:showAsAction="ifRoom|withText"
+        android:title="DEBUG_OFF"/>
+
+
+</menu>

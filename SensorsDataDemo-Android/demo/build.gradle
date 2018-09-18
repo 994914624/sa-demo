@@ -1,0 +1,377 @@
+apply plugin: 'com.android.application'
+
+
+
+apply plugin: 'kotlin-android'
+//应用 Bugtags 插件
+apply plugin: 'com.bugtags.library.plugin'
+//realm  此插件会和神策插件冲突，也会和ARouter冲突
+apply plugin: 'realm-android'
+//lambda
+//apply plugin: 'me.tatarka.retrolambda'
+
+//greendao
+apply plugin: 'org.greenrobot.greendao'
+
+//kotlin
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
+
+//gio 此插件会和神策插件冲突
+apply plugin: 'com.growingio.android'
+
+//RePlugin
+apply plugin: 'replugin-host-gradle'
+repluginHostConfig {
+    useAppCompat = true
+}
+
+
+//添加 com.sensorsdata.analytics.android 插件
+apply plugin: 'com.sensorsdata.analytics.android'
+
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+    mavenCentral()
+}
+
+//sensorsAnalytics {
+//    excludeJarFilter 'BaiduLBS_Android.'
+//}
+//
+//sensorsAnalytics {
+//    includeJarFilter 'ebsiness', 'XXX','XXX'
+//}
+
+//sensorsAnalytics {
+//    includeJarFilter 'bcmpt', 'cls', 'imlib', 'intimacy', 'com.android.support'
+//}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    //java 8
+    //defaultConfig.jackOptions.enabled = true
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+    //databinding
+    dataBinding {
+        enabled = true
+    }
+
+    //
+//    dexOptions {
+//        //incremental = true;
+//        preDexLibraries = false
+//        javaMaxHeapSize "2g"
+//    }
+
+    defaultConfig {
+        applicationId "cn.sensorsdata.demo"
+        minSdkVersion 11
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        //ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        // Enabling multidex support.
+        multiDexEnabled true
+
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME   : applicationId,
+                JPUSH_APPKEY    : "59549f789b379e79761a7b86", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL   : "developer-default", //暂时填写默认值即可.
+                //个推
+                GETUI_APP_ID    : "49nJPRDPOV6BKGVSYIeU45",
+                GETUI_APP_KEY   : "B5SOup4JHu6ltY4oOYjGP1",
+                GETUI_APP_SECRET: "OUgQ0Uo6bqAdou2BOxk1F"
+        ]
+
+//        //gio
+//        resValue("string", "growingio_project_id", "9c1310e01a950506")
+//        resValue("string", "growingio_url_scheme", "growing.32c9d0e25e58b502")
+        //gio
+        resValue("string", "growingio_project_id", "ad8d6a344dbae02f")
+        resValue("string", "growingio_url_scheme", "growing.a679131c25b59597")
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+
+                // Clang是一个C语言、Objective-C、C++语言的轻量级编译器。
+                //arguments "-DANDROID_TOOLCHAIN=clang"
+                // 生成.so库的目标平台
+                abiFilters "armeabi-v7a", "armeabi", "x86"
+            }
+        }
+    }
+    buildTypes {
+        release {
+
+            buildConfigField 'Boolean', 'SA_DEBUG', 'false'
+            buildConfigField 'String', 'SA_SERVER_URL', '"正式环境数据接收地址"'
+            // 分包设置
+            //multiDexKeepProguard 'multidexKeep.pro'
+            //multiDexKeepProguard file('multidexKeep.pro')
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //资源对齐
+            zipAlignEnabled true
+            // 输出不同的 APK 文件
+//            applicationVariants.all { variant ->
+//                if (variant.buildType.name.equals('release')) {
+//                    variant.outputs.each { output ->
+//                        def outputFile = output.outputFile
+//                        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                            def fileName = "demo_v${defaultConfig.versionName}_${variant.flavorName}_${buildTime()}.apk"
+//                            output.outputFile = new File(outputFile.parent, fileName)
+//                        }
+//                    }
+//                }
+//            }
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "demo_v${variant.productFlavors[0].name}_${variant.versionName}_${buildTime()}.apk"
+                }
+            }
+
+
+        }
+        debug {
+
+            multiDexKeepProguard file('multidexKeep.pro')
+            //zipAlignEnabled true
+            //shrinkResources true
+            //minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'Boolean', 'SA_DEBUG', 'true'
+            buildConfigField 'String', 'SA_SERVER_URL', '"测试环境的数据接收地址"'
+
+        }
+    }
+
+    flavorDimensions "color"
+    productFlavors {
+        xiaomi {
+            //applicationIdSuffix ".yy"
+            applicationId "cn.sensorsdata.demo"
+            //manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE","xiaomi")
+            dimension "color"
+            resValue "color", "flavor_color", "#ff0000"
+        }
+//        google {
+//            applicationId "cn.sensorsdata.demo"
+//            // manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE","xiaomi")
+//        }
+//        baidu {
+//            applicationId "cn.sensorsdata.demo"
+//            //manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE","xiaomi")
+//        }
+    }
+
+    productFlavors.all { flavor ->
+        manifestPlaceholders.put("SENSORS_ANALYTICS_UTM_SOURCE_VALUE", name)
+        // buildConfigField 'String', 'API_SERVER_URL', '"https://www.sensorsdata.cn/manual/android_sdk_autotrack.html"'
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+}
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:26.0.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    //xiaomi
+    implementation files('libs/MiPush_SDK_Client_3_2_1.jar')
+
+    //添加 Sensors Analytics SDK 依赖
+
+    //    compile('com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.8') {
+
+    //        exclude group: "com.android.support", module: "appcompat-v7"
+
+    //    }
+
+    //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.10'
+    //implementation 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:2.0.1'
+
+    implementation(name: 'SensorsAnalyticsSDK-debug', ext: 'aar')
+
+    //crashlytics
+    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+
+    // 阿里VLayout
+    implementation('com.alibaba.android:vlayout:1.0.6@aar') {
+        transitive = true
+    }
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    //v7
+
+    //jiguang
+
+    //umeng
+
+    //getui
+
+    //greendao
+
+    // litepal
+
+    //multidex
+
+    //compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //ButterKnife
+
+    //Lambda
+
+    //retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.1'
+
+    //ARouter
+
+    //Fragmentation
+
+    //leakcanary
+
+    //gio
+
+    //talkingdata
+
+    //compile files('libs/TalkingdataAnalytics.jar')
+
+    //permission
+    implementation files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
+
+    //compile files('libs/imsdk.jar')
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+
+    //compile 'com.android.support:support-v4:23.0.0'
+    implementation 'cn.jiguang.sdk:jpush:3.0.0'
+    implementation 'cn.jiguang.sdk:jcore:1.0.0'
+    //compile 'com.umeng.sdk:common:latest.integration'
+    //compile 'com.umeng.sdk:analytics:latest.integration'
+    //compile 'com.umeng.analytics:analytics:latest.integration'
+    implementation 'com.getui:sdk:2.10.2.0'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'org.litepal.android:core:1.5.1'
+    implementation 'com.android.support:multidex:1.0.1'
+
+    //compile 'com.android.support:support-v4:25.3.1'
+//    implementation 'com.jakewharton:butterknife:8.7.0'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    implementation 'com.alibaba:arouter-api:1.2.1.1'
+    implementation 'me.yokeyword:fragmentation:1.0.7'
+    implementation 'com.growingio.android:vds-android-agent:1.1.8@aar'
+    implementation 'com.yanzhenjie:permission:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+
+    //implementation files('libs/log_agent-1.0-SNAPSHOT.jar')
+    implementation 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+
+    //compile 'com.github.GrenderG:Toasty:1.2.5'
+
+    //compile 'org.aspectj:aspectjrt:1.8.10'
+    implementation files('libs/umeng-analytics-7.4.4.jar')
+    implementation files('libs/umeng-common-1.4.4.jar')
+    implementation files('libs/umerror_android_1.0.0.jar')
+
+    //RePlugin
+    implementation 'com.qihoo360.replugin:replugin-host-lib:2.2.4'
+    //stetho
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-urlconnection:1.5.0'
+    implementation 'com.facebook.stetho:stetho-js-rhino:1.5.0'
+    //debug-db
+    debugImplementation('com.amitshekhar.android:debug-db:1.0.3') {
+        exclude group: 'com.android.support'
+    }
+    //Toasty
+    implementation('com.github.GrenderG:Toasty:1.2.8') {
+        exclude group: 'com.android.support'
+    }
+    //高德定位
+    implementation 'com.amap.api:location:4.0.1'
+    // Server
+    implementation 'com.yanzhenjie:andserver:1.1.4'
+}
+
+//----------crashlytics-----------
+
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+//---------------------------------
+task hello {
+    doLast {
+        println 'Hello gradle world!'
+    }
+}
+apply plugin: 'kotlin-android-extensions'
+
+
+configurations.all {
+
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.0.0'//默认使用的版本
+            }
+        }
+    }
+}

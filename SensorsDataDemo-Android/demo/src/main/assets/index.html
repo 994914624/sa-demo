@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+	/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>Hello APP</title>
+	
+	<style>
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+		}
+		
+		#wrap {
+			height: 100%;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-flex-flow: column;
+			flex-flow: column;
+		}
+		
+		.topbar {
+			background: #f1f1f1;
+			height: 50px;
+			border-bottom: 1px solid #fff;
+			line-height: 50px;
+			text-align: center;
+			color: #323237;
+			margin: 10px;
+		}
+		
+		.headerbar {
+			height: 80px;
+			line-height: 80px;
+			color: #fff;
+			font-size: 25px;
+			background: #1BB17B;
+		}
+	</style>
+
+
+
+
+<script>
+(function(para) {
+  var n = para.name;
+  window['sensorsDataAnalytic201505'] = n;
+  window[n] = {
+    _q: [],
+    para: para
+  };
+})({
+    sdk_url: 'http://static.sensorsdata.cn/sdk/1.10.4/sensorsdata.min.js',
+  name: 'sa',
+  use_app_track:true,
+  server_url: 'http://sdk-test.cloud.sensorsdata.cn:8006/sa?project=yangzhankun&token=95c73ae661f85aa0'
+});
+</script>
+	<script src="http://static.sensorsdata.cn/sdk/1.10.4/sensorsdata.min.js"></script>
+	<script>
+sa.quick('autoTrack');
+</script>
+
+</head>
+
+<body>
+	<div id="wrap">
+		<header></header>
+		<section>
+
+			<div id="login" class="topbar">
+				login
+			</div>
+			<div id="track" class="topbar">
+				track
+			</div>
+			<div id="setProfile" class="topbar">
+				setProfile
+			</div>
+			<div id="setOnceProfile" class="topbar">
+				setOnceProfile
+			</div>
+			<div id="appendProfile" class="topbar">
+				appendProfile
+			</div>
+			<div id="incrementProfile" class="topbar">
+				incrementProfile
+			</div>
+			<div id="deleteProfile" class="topbar">
+				deleteProfile
+			</div>
+			<div id="unsetProfile" class="topbar">
+				unsetProfile
+			</div>
+			<div id="appPass" class="topbar">
+				app传值
+			</div>
+			<div id="identify" class="topbar">
+				identify
+			</div>
+			<div id="logout" class="topbar">
+				logout
+			</div>
+
+			<!--<div id="flush" class="topbar">-->
+				<!--事件-->
+			<!--</div>-->
+			<!--<a href="yang://zhan">打开神策Demo</a>-->
+			<!--&lt;!&ndash;<div >&ndash;&gt;-->
+			<!--&lt;!&ndash;<a href="weixin://dl/moments">微信朋友圈</a>&ndash;&gt;-->
+			<!--&lt;!&ndash;</div>&ndash;&gt;-->
+			<!--&lt;!&ndash;<div >&ndash;&gt;-->
+			<!--&lt;!&ndash;<a href="weixin://dl/">启动</a> &ndash;&gt;-->
+			<!--</div>-->
+		</section>
+	</div>
+</body>
+
+<script type="text/javascript">
+
+
+		//login
+		document.getElementById("login").onclick = function () {
+			alert("login");
+			sa.login("user789");
+		}
+		//track事件
+		document.getElementById("track").onclick = function () {
+			alert("track");
+		sa.track("JS_event",{a:1,b:"神策JS"});
+
+		}
+		//setProfile
+		document.getElementById("setProfile").onclick = function () {
+			alert("setProfile");
+			sa.setProfile({a:1,b:"你"});
+		}
+		//setOnceProfile
+		document.getElementById("setOnceProfile").onclick = function () {
+			alert("setOnceProfile");
+			sa.setOnceProfile({a:1,b:"你"});
+		}
+		//appendProfile
+		document.getElementById("appendProfile").onclick = function () {
+			alert("appendProfile");
+			sa.appendProfile({catrgory: '玉米'});
+		}
+		//incrementProfile
+		document.getElementById("incrementProfile").onclick = function () {
+			alert("incrementProfile");
+			sa.incrementProfile({buyTime:2});
+		}
+		//deleteProfile
+		document.getElementById("deleteProfile").onclick = function () {
+			alert("deleteProfile");
+			sa.deleteProfile();
+		}
+		//unsetProfile
+		document.getElementById("unsetProfile").onclick = function () {
+			alert("unsetProfile");
+			sa.unsetProfile(["name","sex"]);
+		}
+
+		//app传值
+		document.getElementById("appPass").onclick = function () {
+			alert("appPass");
+				sa.getAppStatus(function(app_info){
+
+    			// 跟踪事件
+    			sa.track("ViewHomePage",{"platform":app_info.platform});
+				});
+				sa.register({abc:"公共属性"});
+		}
+
+		//identify
+		document.getElementById("identify").onclick = function () {
+			alert("identity");
+				sa.identity("12345678");
+		}
+		//logout
+		document.getElementById("logout").onclick = function () {
+			alert("logout");
+				sa.logout();
+		}
+		
+</script>
+
+</html>

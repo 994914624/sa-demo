@@ -1,0 +1,56 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+              android:orientation="vertical"
+    android:background="#7fda7d"
+             >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        >
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="MineFragment"
+            android:textColor="#ffffffff"/>
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:id="@+id/map"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_launcher"/>
+        <TextView
+            android:layout_alignParentRight="true"
+           android:layout_below="@+id/map"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="查看地图"
+            android:textColor="#ffffffff"/>
+
+    </RelativeLayout>
+    <Button
+        android:text="跳转"
+        android:id="@+id/test_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <ListView
+        android:id="@+id/listView_mine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+
+
+
+</LinearLayout>

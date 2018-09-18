@@ -1,0 +1,5 @@
+[user]
+	name = yangzhankun
+	email = yangzhankun@sensorsdata.cn
+[http]
+	postBuffer = 2048m

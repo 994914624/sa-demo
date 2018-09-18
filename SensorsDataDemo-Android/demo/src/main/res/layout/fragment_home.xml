@@ -1,0 +1,24 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#508ccf"
+    tools:context="cn.sensorsdata.demo.fragment.HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:gravity="center"
+        android:id="@+id/homeFrag_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Homefrag" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_frg_vp"
+        android:background="#e464d1"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+    </android.support.v4.view.ViewPager>
+
+</FrameLayout>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_yang"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="MyFragment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <RadioGroup
+                android:id="@+id/radio_group222"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="领域分布" />
+
+                <RadioButton
+                    android:id="@+id/rb_middle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="轮次分布" />
+
+                <RadioButton
+                    android:id="@+id/rb_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="投资趋势" />
+            </RadioGroup>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchCompat"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchCompat2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchCompat3"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:clickable="true"
+                android:text="tab01"
+                android:onClick="onTest"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+            <Button
+                android:text="tab02"
+                android:onClick="onTest02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:text="menu"
+                android:id="@+id/button_menu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+            <SeekBar
+                android:id="@+id/yang_seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+            <RatingBar
+                android:id="@+id/yang_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <Spinner
+                android:id="@+id/yang_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp">
+            </Spinner>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+
+
+
+            </LinearLayout>
+            <ToggleButton
+                android:textOn="开"
+                android:textOff="关"
+                android:id="@+id/toggleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <ToggleButton
+                android:textOn="开"
+                android:textOff="关"
+                android:id="@+id/toggleButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <CheckedTextView
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:id="@+id/checkedTextView"
+                android:text="checkedTextView"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+            <CheckBox
+                android:id="@+id/yang_checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="复选" />
+            <CheckBox
+                android:id="@+id/yang_checkBox000"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="复选02" />
+
+            <RadioButton
+                android:id="@+id/yang_radioButton000"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="radioButton单独" />
+            <RadioButton
+                android:id="@+id/yang_radioButton111"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="radioButton单独111" />
+            <RadioGroup
+                android:id="@+id/yang_RadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/yang_radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="radioButton" />
+
+                <RadioButton
+                    android:id="@+id/yang_radioButton01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="radioButton01" />
+
+                <RadioButton
+                    android:id="@+id/yang_radioButton02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="radioButton02" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/yang_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="button" />
+
+            <TextView
+                android:id="@+id/yang_textView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="textView" />
+
+            <ImageView
+                android:id="@+id/yang_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <ImageButton
+                android:id="@+id/yang_imageButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <ExpandableListView
+                android:id="@+id/yang_expandablelistview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <ListView
+                android:id="@+id/yang_listView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </ListView>
+
+            <GridView
+                android:id="@+id/yang_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </GridView>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_yang_tab"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+
+    tools:context=".yang.YangTabActivity">
+    <LinearLayout android:id="@+id/tab01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView android:id="@+id/iv01"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+        <TextView android:id="@+id/tv01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dip"
+            android:text="Android的创造者: Andy Rubin"/>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/tab02"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView android:id="@+id/iv02"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/left_back"/>
+        <TextView android:id="@+id/tv02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dip"
+            android:text="Java创造者之一: Bill Joy"/>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/tab03"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView android:id="@+id/iv03"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_arrow"/>
+        <TextView android:id="@+id/tv03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dip"
+            android:text="Linux之父: Linus Torvalds"/>
+    </LinearLayout>
+</LinearLayout>

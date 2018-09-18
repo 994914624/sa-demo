@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/popup_shape"
+
+    android:layout_height="match_parent">
+
+    <TextView
+        android:gravity="center"
+
+        android:text="请选择要上传的项目"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_1"
+        android:gravity="center"
+        android:text="项目1"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_2"
+        android:gravity="center"
+        android:text="项目2"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_3"
+        android:gravity="center"
+        android:text="项目3"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_4"
+        android:gravity="center"
+        android:text="项目4"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_5"
+        android:gravity="center"
+        android:text="项目5"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_6"
+        android:gravity="center"
+        android:text="项目6"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_7"
+        android:gravity="center"
+        android:text="项目7"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_8"
+        android:gravity="center"
+        android:text="项目8"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <View
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp">
+    </View>
+    <TextView
+        android:id="@+id/popup_project_cancel"
+        android:gravity="center"
+        android:text="取消"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+</LinearLayout>

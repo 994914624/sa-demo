@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>New Web Project</title>
+
+<style type="text/css">
+  body{
+    height:800px;
+
+  }
+  button{
+    border: 1px solid #fff;
+  }
+
+/*
+
+.sa-click-area{
+  position: relative;
+    box-shadow: inset 0 0 0 2px #ffa500;
+}
+.sa-click-area:before {
+    content: "";
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sa-click-area.sa-click-area0:before {
+    background: rgba(255, 0, 0, .5);
+    box-shadow: inset 0 0 0 2px #f00;
+}
+
+.sa-click-area.sa-click-area1:before {
+    background: rgba(255, 165, 0, .5);
+    box-shadow: inset 0 0 0 2px #ffa500;
+}
+
+.sa-click-area.sa-click-area2:before {
+    background: rgba(255, 255, 0, .5);
+    box-shadow: inset 0 0 0 2px #ff0;
+}
+
+.sa-click-area.sa-click-area3:before {
+    background: rgba(64, 224, 208, .5);
+    box-shadow: inset 0 0 0 2px #40e0d0;
+}
+
+.sa-click-area.sa-click-area4:before {
+    box-shadow: inset 0 0 0 2px #00f;
+    background: rgba(0, 0, 255, .5);
+}
+
+
+.sa-click-area.sa-click-area0:hover::before {
+    background: rgba(255, 0, 0, 0.8) none repeat scroll 0 0;
+}
+.sa-click-area.sa-click-area1:hover::before {
+    background: rgba(255, 165, 0, 0.8) none repeat scroll 0 0;
+}
+.sa-click-area.sa-click-area2:hover::before {
+    background: rgba(255, 255, 0, 0.8) none repeat scroll 0 0;
+}
+.sa-click-area.sa-click-area3:hover::before {
+    background: rgba(64, 224, 208, 0.8) none repeat scroll 0 0;
+}
+.sa-click-area.sa-click-area4:hover::before {
+    background: rgba(0, 0, 255, 0.8) none repeat scroll 0 0;
+}
+
+
+.sa-click-area.sa-click-area0:hover {
+    box-shadow: 0 0 0 3px #f00 inset;
+}
+.sa-click-area.sa-click-area1:hover {
+    box-shadow: 0 0 0 3px #ffa500 inset;
+}
+.sa-click-area.sa-click-area2:hover {
+    box-shadow: 0 0 0 3px #ff0 inset;
+}
+.sa-click-area.sa-click-area3:hover {
+    box-shadow: 0 0 0 3px #40e0d0 inset;
+}
+.sa-click-area.sa-click-area4:hover {
+    box-shadow: 0 0 0 3px #00f inset;
+}
+.sa-click-area .sa-click-area:before{
+  background:none !important;
+}
+
+.sa-click-area:after{
+
+ height: 14px;
+    line-height: 14px;
+    margin: -7px 0 0 -28px;
+    width: 56px;
+
+
+    color: #fff;
+    content: attr(data-click);
+    font-size: 14px;
+    font-weight: bold;
+    left: 50%;
+    line-height: 1em;
+
+    position: absolute;
+    text-align: center;
+    text-indent: 0;
+    text-shadow: 1px 1px 2px #000;
+    top: 50%;
+
+    z-index: 10;
+}
+
+.sa-heat-box-effect-2017314 {
+    animation-duration: 2s;
+    animation-fill-mode: both;  
+    animation-iteration-count:1;
+    animation-name: sa-heat-box-effect-2017314;
+}
+@keyframes sa-heat-box-effect-2017314 {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+*/
+
+</style>
+
+
+<script type="text/javascript" src="jquery.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+  (function(para) {
+  var p = para.sdk_url, n = para.name, w = window, d = document, s = 'script',x = null,y = null;
+  w['sensorsDataAnalytic201505'] = n;
+  w[n] = w[n] || function(a) {return function() {(w[n]._q = w[n]._q || []).push([a, arguments]);}};
+  var ifs = ['track','quick','register','registerPage','registerOnce','registerSession','registerSessionOnce','trackSignup', 'trackAbtest', 'setProfile','setOnceProfile','appendProfile', 'incrementProfile', 'deleteProfile', 'unsetProfile', 'identify','login','logout','clearAllRegister'];
+  for (var i = 0; i < ifs.length; i++) {
+    w[n][ifs[i]] = w[n].call(null, ifs[i]);
+  }
+  if (!w[n]._t) {
+    x = d.createElement(s), y = d.getElementsByTagName(s)[0];
+    x.async = 1;
+    x.src = p;
+    y.parentNode.insertBefore(x, y);
+    w[n].para = para;
+  }
+})({
+
+  sdk_url: 'sensorsdata.full.js',
+  name: 'sa',
+  web_url:'http://wss.cc.cc',
+  heatmap:{},
+  use_app_track:true,
+  server_url: 'http://101.10.11.209:8006/sa?token=251b8f7d3f08d0b0'
+});
+
+sa.quick('autoTrack')
+
+
+
+
+<!--var test = [-->
+<!--'sa.track("event1",{a:1,b:"我"})',-->
+<!--'sa.setProfile({a:1,b:"你"})',-->
+<!--'sa.setOnceProfile({a:1,b:"你"})',-->
+<!--'sa.appendProfile({a:1,b:"你"})',-->
+<!--'sa.incrementProfile({buyTime:2})',-->
+<!--'sa.deleteProfile()',-->
+<!--'sa.unsetProfile(["name","sex"])',-->
+<!--'sa.login("user1234")'-->
+<!--];-->
+
+
+<!--$(function(){-->
+  <!--test = '<option style=" ">' + test.join('</option><option>') + '</option>';-->
+
+
+  <!--$('#test1').append(test).on('change',function(){-->
+    <!--console.log($(this).val())-->
+    <!--eval($(this).val())-->
+  <!--});-->
+
+
+<!--})-->
+
+</script>
+
+
+
+<!--<select id="test1">-->
+
+<!--</select>-->
+
+
+
+  <button style="width:800px;height:80px;" id="btn1">sa.track("event1",{a:1,b:"我"})</button></br>
+  <button style="width:800px;height:80px;" id="btn2">sa.setProfile({a:1,b:"你"})</button></br>
+  <button style="width:800px;height:80px;" id="btn3">sa.setOnceProfile({a:1,b:"你"})</button></br>
+  <button style="width:800px;height:80px;" id="btn4">sa.appendProfile({a:1,b:"你"})</button></br>
+  <button style="width:800px;height:80px;" id="btn5">sa.incrementProfile({buyTime:2})</button></br>
+  <button style="width:800px;height:80px;" id="btn6">sa.deleteProfile()</button></br>
+  <button style="width:800px;height:80px;" id="btn7">sa.unsetProfile(["name","sex"])</button></br>
+  <button style="width:800px;height:80px;" id="btn8">sa.login("user1234")</button></br>
+
+  <script>
+    document.getElementById('btn1').click = function() {
+      sa.track("event1",{a:1,b:"我"});
+    }
+    document.getElementById('btn2').click = function() {
+      sa.setProfile({a:1,b:"你"});
+    }
+    document.getElementById('btn3').click = function() {
+      sa.setOnceProfile({a:1,b:"你"});
+    }
+    document.getElementById('btn4').click = function() {
+      sa.appendProfile({a:1,b:"你"});
+    }
+    document.getElementById('btn5').click = function() {
+      sa.incrementProfile({buyTime:2});
+    }
+    document.getElementById('btn6').click = function() {
+      sa.deleteProfile();
+    }
+    document.getElementById('btn7').click = function() {
+      sa.unsetProfile(["name","sex"]);
+    }
+    document.getElementById('btn8').click = function() {
+      sa.login("user1234");
+    }
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>
