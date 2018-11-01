@@ -41,7 +41,7 @@ import cn.sensorsdata.demo.util.FingerprintHelper;
  */
 @Route(path = "/code/activity")
 @SensorsDataAutoTrackAppViewScreenUrl(url="xxx.aaa页面")
-public class CodeActivity extends Activity implements View.OnClickListener {
+public class CodeActivity extends BaseActivity implements View.OnClickListener {
 
     TextView tv_txt = null;
     private TextView textView_code_bg = null;
@@ -82,7 +82,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
 
 
         //打开内部插件apk
-        RePlugin.startActivity(this, RePlugin.createIntent("com.yang.testapp2", "com.yang.testapp2.MainActivity"));
+        //RePlugin.startActivity(this, RePlugin.createIntent("com.yang.testapp2", "com.yang.testapp2.MainActivity"));
 
 
     }
@@ -217,26 +217,10 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         tv_txt.setGravity(Gravity.LEFT);
         //把事件显示到TextView上
         if (SensorsDataAPI.sharedInstance(this).getLoginId() == null) {
-            tv_txt.setText("track事件\n" +
-                    "事件名称：ViewProduct\n" +
-                    "事件属性：{\n" +
-                    "  ProductID：123456\n" +
-                    "  ProductCatalog：Laptop Computer\n" +
-                    "  IsAddedToFav：false\n" +
-                    "  }\n" +
-                    "distinct_id：" + SensorsDataAPI.sharedInstance().getAnonymousId() + "\n" +
-                    "loginId："
+            tv_txt.setText(String.format("track事件\n事件名称：ViewProduct\n事件属性：{\n  ProductID：123456\n  ProductCatalog：Laptop Computer\n  IsAddedToFav：false\n  }\ndistinct_id：%s\nloginId：", SensorsDataAPI.sharedInstance().getAnonymousId())
             );
         } else {
-            tv_txt.setText("track事件\n" +
-                    "事件名称：ViewProduct\n" +
-                    "事件属性：{\n" +
-                    "  ProductID：123456\n" +
-                    "  ProductCatalog：Laptop Computer\n" +
-                    "  IsAddedToFav：false\n" +
-                    "  }\n" +
-                    "distinct_id：" + SensorsDataAPI.sharedInstance().getAnonymousId() + "\n" +
-                    "loginId：" + SensorsDataAPI.sharedInstance().getLoginId()
+            tv_txt.setText(String.format("track事件\n事件名称：ViewProduct\n事件属性：{\n  ProductID：123456\n  ProductCatalog：Laptop Computer\n  IsAddedToFav：false\n  }\ndistinct_id：%s\nloginId：%s", SensorsDataAPI.sharedInstance().getAnonymousId(), SensorsDataAPI.sharedInstance().getLoginId())
             );
         }
     }
@@ -251,16 +235,20 @@ public class CodeActivity extends Activity implements View.OnClickListener {
             //SensorsDataAPI.sharedInstance(this).trackSignUp(loginId);
 
             // 注册成功 / 登录成功 后 保存 jgId 到用户表
-            if(!TextUtils.isEmpty(JPushInterface.getRegistrationID(this))&&!TextUtils.isEmpty(MiPushClient.getRegId(getApplicationContext()))){
-                JSONObject properties = new JSONObject();
+            JSONObject properties = new JSONObject();
+            if(!TextUtils.isEmpty(JPushInterface.getRegistrationID(this))){
                 // 将用户 Profile "jgAndroidId" 设为 registrationId
-                properties.put("jgAndroidId", JPushInterface.getRegistrationID(this)+"")
-                          .put("xmAndroidId",MiPushClient.getRegId(this)+"")
-                          .put("gtAndroidId", PushManager.getInstance().getClientid(this));
-                // 设置用户 Profile
-                SensorsDataAPI.sharedInstance().profileSet(properties);
+                properties.put("jgAndroidId", JPushInterface.getRegistrationID(this)+"");
+            }
+            if(!TextUtils.isEmpty(MiPushClient.getRegId(getApplicationContext()))){
+                properties.put("xmAndroidId",MiPushClient.getRegId(this)+"");
+            }
+            if(!TextUtils.isEmpty(PushManager.getInstance().getClientid(this))){
+                properties.put("gtAndroidId", PushManager.getInstance().getClientid(this));
             }
 
+            // 设置用户 Profile
+            SensorsDataAPI.sharedInstance().profileSet(properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -366,12 +354,13 @@ public class CodeActivity extends Activity implements View.OnClickListener {
     /**
      * 设置ActionBar
      */
-    @TargetApi(11)
+    @TargetApi(18)
     private void setActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("代码埋点");
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.mipmap.left_back);
         int titleId = Resources.getSystem().getIdentifier("action_bar_title",
                 "id", "android");
         TextView tvTitle = (TextView) findViewById(titleId);

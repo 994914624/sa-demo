@@ -57,11 +57,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sensorsdata.demo.constant.SeverURLConfig;
 import cn.sensorsdata.demo.fragmentation.FragmentationActivity;
 import cn.sensorsdata.demo.test.YangRecycleViewActivity;
+import cn.sensorsdata.demo.util.SensorsDataUtil;
 import cn.sensorsdata.demo.yang.BaseViewActivity;
 import cn.sensorsdata.demo.yang.KotlinActivity;
+import cn.sensorsdata.demo.yang.MyDialogFragment;
 import cn.sensorsdata.demo.yang.ServerManager;
 import cn.sensorsdata.demo.yang.ViewPagerActivity;
 import cn.sensorsdata.demo.yang.YangSingleActivity;
@@ -108,6 +111,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         //RePlugin.install("/sdcard/testExternalRePlugin.apk");
 
         //dialog1();
+//        MyDialogFragment fragment= new MyDialogFragment ();
+//
+//        fragment.show(getFragmentManager(), "MyDialogment");
 
 
 
@@ -118,7 +124,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         //申请 READ_PHONE_STATE 权限
         if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
             if (ActivityCompat.checkSelfPermission(this, "android.permission.READ_PHONE_STATE") != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, 100);
+                //SensorsDataAPI.sharedInstance().ignoreAutoTrackActivity(MainActivity.class);
+                ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_PHONE_STATE"}, (int) (Math.random()*1000)+10);
             }
         } else {
             // 6.0 以下 直接调用 trackInstallation 触发激活事件,做渠道追踪。
@@ -200,38 +207,38 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         switch (view.getId()) {
             case R.id.textView_code:
-                ARouter.getInstance().build("/code/activity").navigation();
+                //ARouter.getInstance().build("/code/activity").navigation();
                 intent.setClass(this, CodeActivity.class);
                 break;
             case R.id.textView_vt:
-                ARouter.getInstance().build("/vt/activity").navigation();
+                //ARouter.getInstance().build("/vt/activity").navigation();
                 intent.setClass(this, VTActivity.class);
                 break;
             case R.id.textView_autotrack:
-                ARouter.getInstance().build("/autotrack/activity").navigation();
+               // ARouter.getInstance().build("/autotrack/activity").navigation();
                 intent.setClass(this, AutoTrackActivity.class);
                 break;
             case R.id.textView_jg:
-                ARouter.getInstance().build("/jiguangpush/activity").navigation();
+                //ARouter.getInstance().build("/jiguangpush/activity").navigation();
                 intent.setClass(this, JiguangPushActivity.class);
                 break;
             case R.id.textView_xm:
-                ARouter.getInstance().build("/xiaomipush/activity").navigation();
+                //ARouter.getInstance().build("/xiaomipush/activity").navigation();
                 intent.setClass(this, XiaomiPushActivity.class);
                 break;
             case R.id.textView_gt:
-                ARouter.getInstance().build("/getui/activity").navigation();
+                //ARouter.getInstance().build("/getui/activity").navigation();
                 intent.setClass(this, GeTuiActivity.class);
                 break;
-            case R.id.textView_yang:
-
-
-                intent.setClass(this, FragmentationActivity.class);
-                //intent.setClass(this, DemoActivity.class);
-                //intent.setClass(this,BaseViewActivity.class);
-
-
-                break;
+//            case R.id.textView_yang:
+//
+//
+//               // intent.setClass(this, FragmentationActivity.class);
+//                //intent.setClass(this, DemoActivity.class);
+//                //intent.setClass(this,BaseViewActivity.class);
+//
+//
+//                break;
             case R.id.title_project:
 
                 //打开popupwindow
@@ -241,7 +248,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             default:
                 break;
         }
-        startActivity(intent);
+        try {
+            startActivity(intent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
     }
@@ -375,43 +386,43 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Intent intent =new Intent();
         switch (item.getItemId()) {
             case 1:
-                ARouter.getInstance().build("/demo/activity").navigation();
+               // ARouter.getInstance().build("/demo/activity").navigation();
                 intent.setClass(this,DemoActivity.class);
                 break;
             case 2:
-                ARouter.getInstance().build("/baseview/activity").navigation();
+                //ARouter.getInstance().build("/baseview/activity").navigation();
                 intent.setClass(this,BaseViewActivity.class);
                 break;
             case 3:
-                ARouter.getInstance().build("/yangapp/activity").navigation();
+                //ARouter.getInstance().build("/yangapp/activity").navigation();
                 intent.setClass(this,YangappfragActivity.class);
                 break;
             case 4:
-                ARouter.getInstance().build("/yangtab/activity").navigation();
+                //ARouter.getInstance().build("/yangtab/activity").navigation();
                 intent.setClass(this,YangTabActivity.class);
                 break;
             case 5:
-                ARouter.getInstance().build("/yangtab2/activity").navigation();
+               // ARouter.getInstance().build("/yangtab2/activity").navigation();
                 intent.setClass(this,YangTab2Activity.class);
                 break;
             case 6:
-                ARouter.getInstance().build("/yangfrag/activity").navigation();
+                //ARouter.getInstance().build("/yangfrag/activity").navigation();
                 intent.setClass(this,YangfragActivity.class);
                 break;
             case 7:
-                ARouter.getInstance().build("/yangrecycleview/activity").navigation();
+                //ARouter.getInstance().build("/yangrecycleview/activity").navigation();
                 intent.setClass(this,YangRecycleViewActivity.class);
                 break;
             case 8:
-                ARouter.getInstance().build("/yangwebview/activity").navigation();
+               // ARouter.getInstance().build("/yangwebview/activity").navigation();
                 intent.setClass(this,YangWebViewActivity.class);
                 break;
             case 9:
-                ARouter.getInstance().build("/yangsingle/activity").navigation();
+                //ARouter.getInstance().build("/yangsingle/activity").navigation();
                 intent.setClass(this,YangSingleActivity.class);
                 break;
             case 10:
-                ARouter.getInstance().build("/kotlin/activity").navigation();
+                //ARouter.getInstance().build("/kotlin/activity").navigation();
                 intent.setClass(this,KotlinActivity.class);
                 break;
             case 11:
@@ -463,12 +474,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         if (ActivityCompat.checkSelfPermission(this, "android.permission.WRITE_EXTERNAL_STORAGE") != PackageManager.PERMISSION_GRANTED) {
             Log.e(TAG, "permission3");
+            //SensorsDataAPI.sharedInstance().ignoreAutoTrackActivity(MainActivity.class);
             ActivityCompat.requestPermissions(this, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 113);
 
         }
 
         if (ActivityCompat.checkSelfPermission(this, "android.permission.ACCESS_FINE_LOCATION") != PackageManager.PERMISSION_GRANTED) {
             Log.e(TAG, "permission4");
+            //SensorsDataAPI.sharedInstance().ignoreAutoTrackActivity(MainActivity.class);
             ActivityCompat.requestPermissions(this, new String[]{"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION","android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"}, 114);
 
         }
@@ -516,7 +529,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             e.printStackTrace();
         }
 
-
+        //SensorsDataUtil.profilePushId("jgId",JPushInterface.getRegistrationID(this),this);
 
 
 
@@ -542,6 +555,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
+       // SensorsDataAPI.sharedInstance().resumeAutoTrackActivity(MainActivity.class);
         Log.d("SA.Sensors","MainActivity  onPause");
        // MobclickAgent.onPause(this);
 

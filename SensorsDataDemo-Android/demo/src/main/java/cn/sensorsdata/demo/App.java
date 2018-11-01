@@ -69,6 +69,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.jpush.android.api.JPushInterface;
 import cn.sensorsdata.demo.bean.WeChatMessage;
 import cn.sensorsdata.demo.constant.SeverURLConfig;
@@ -104,7 +105,7 @@ public class App extends MultiDexApplication {
      * Sensors Analytics 采集数据的地址
      */
     //private   String SA_SERVER_URL = "http://192.168.8.252:8888/sa?";
-    //private   String SA_SERVER_URL = "http://sgwxtest1.cloud.sensorsdata.cn:8006/debug?token=161a7c350096354b";
+    private   String SA_Q = "https://sensorsfocoustest.datasink.sensorsdata.cn/sa?project=default&token=6c6afc3d52a85ad3";
 
     private final static String SA_SERVER_URL = "http://sdk-test.cloud.sensorsdata.cn:8006/sa?project=yangzhankun&token=95c73ae661f85aa0";
     //分析师环境
@@ -138,11 +139,13 @@ public class App extends MultiDexApplication {
 
 
         Log.e(TAG,"onCreate");
-
         // 初始化神策sdk
         initSensorsDataAPI();
+        Log.e(TAG,"onCreate SDK OK");
 
         if (shouldInit()) {
+
+
             intARouter();
             initCrashlytics();
 
@@ -163,6 +166,8 @@ public class App extends MultiDexApplication {
             //sensors();
             initAMap();
 
+            //侧滑
+            BGASwipeBackHelper.init(this,  null);
         }
 
 
@@ -254,24 +259,34 @@ public class App extends MultiDexApplication {
 
         //SensorsDataAPI.sharedInstance().enableEditingVTrack();
         //开启热力图
-        SensorsDataAPI.sharedInstance().enableHeatMap();
+        SensorsDataAPI.sharedInstance(this).enableHeatMap();
         //SensorsDataAPI.sharedInstance(this).addHeatMapActivity(MainActivity.class);
 
 
+
+
+        // 设置动态公共属性
         SensorsDataAPI.sharedInstance().registerDynamicSuperProperties(new SensorsDataDynamicSuperProperties() {
             @Override
             public JSONObject getDynamicSuperProperties() {
                 try {
-                    return new JSONObject().put("eventTime",new Date());
-                } catch (JSONException e) {
+                    // 比如 isLogin() 是用于获取用户当前的登录状态，通过 registerDynamicSuperProperties 就可以把用户当前的登录状态，添加到触发的埋点事件中。
+                    boolean bool = isLogin();
+                    return new JSONObject().put("isLogin",bool);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return null;
             }
         });
 
+        SensorsDataAPI.sharedInstance().deleteAll();
 
 
+    }
+
+    private boolean isLogin() {
+        return false;
     }
 
 
@@ -507,7 +522,7 @@ public class App extends MultiDexApplication {
      * crashlytics 初始化，用于crash收集
      */
     private void initCrashlytics() {
-        Fabric.with(this, new Crashlytics());
+       // Fabric.with(this, new Crashlytics());
     }
 
     /**
@@ -533,9 +548,9 @@ public class App extends MultiDexApplication {
      */
     private void initGTPush() {
         //GeTuiService 为第三方自定义推送服务
-        PushManager.getInstance().initialize(this, GeTuiService.class);
+        PushManager.getInstance().initialize(this.getApplicationContext(), GeTuiService.class);
         //用于接收CID、透传消息以及其他推送服务事件。
-        PushManager.getInstance().registerPushIntentService(this, GeTuiIntentService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), GeTuiIntentService.class);
 
     }
 

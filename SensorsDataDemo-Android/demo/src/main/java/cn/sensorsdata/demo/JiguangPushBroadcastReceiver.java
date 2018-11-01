@@ -22,17 +22,20 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class JiguangPushBroadcastReceiver extends BroadcastReceiver {
 
+    private static final String TAG = "__ ji juang __";
+    private static final String TXT = "----------------------- 极光推送 ---------------------------\n";
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.e("jiguang","getAction:---"+intent.getAction());
+        Log.i(TAG,"onReceive : "+TXT);
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
 
 
 
 
 
-
+            Log.i(TAG," 极光 推送ID 注册成功: "+TXT);
 
 
 
@@ -66,7 +69,7 @@ public class JiguangPushBroadcastReceiver extends BroadcastReceiver {
      */
     private void appRegistrationID(Context context, Intent intent) {
 
-        Log.e("jg","appRegistrationID");
+        Log.e("yyyyyy","ji guang  push  appRegistrationID");
         try {
             // 获取极光推送的 RegistrationId
             final String registrationId = intent.getExtras().getString(JPushInterface.EXTRA_REGISTRATION_ID);
@@ -91,6 +94,7 @@ public class JiguangPushBroadcastReceiver extends BroadcastReceiver {
      */
     private void appReceivedNotification(Context context, Intent intent) {
         try {
+            Toast.makeText(context," 极光 消息到达",Toast.LENGTH_SHORT).show();
             Bundle message = intent.getExtras();
             JSONObject properties = new JSONObject();
             // 获取消息标题，并保存在事件属性 msg_title 中

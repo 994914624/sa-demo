@@ -24,12 +24,14 @@ import com.xiaomi.mipush.sdk.MiPushClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * 小米推送 Activity
  */
 @Route(path = "/xiaomipush/activity")
-public class XiaomiPushActivity extends Activity implements ScreenAutoTracker{
+public class XiaomiPushActivity extends BaseActivity implements ScreenAutoTracker{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,14 @@ public class XiaomiPushActivity extends Activity implements ScreenAutoTracker{
         if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
 
-
+        try {
+            JSONObject properties = new JSONObject();
+            properties.put("xmAndroidId", MiPushClient.getRegId(this)+"");
+            // 设置用户 Profile
+            SensorsDataAPI.sharedInstance().profileSet(properties);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -62,13 +71,14 @@ public class XiaomiPushActivity extends Activity implements ScreenAutoTracker{
     /**
      * 设置ActionBar
      */
-    @TargetApi(11)
+    @TargetApi(18)
     private void setActionBar(){
         ActionBar actionBar=getActionBar();
         actionBar.setTitle("小米推送");
         // 设置不显示左侧图标
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.mipmap.left_back);
         int titleId = Resources.getSystem().getIdentifier("action_bar_title",
                 "id", "android");
         TextView tvTitle = (TextView) findViewById(titleId);

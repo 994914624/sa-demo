@@ -2,12 +2,16 @@ package cn.sensorsdata.demo.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,18 +35,18 @@ public class SensorsDataUtil {
      *
      * @param eventName  事件的名称
      * @param properties 事件的属性
-     * @param activity 事件发生时所在的 Activity，用于获取类名
+     * @param activity   事件发生时所在的 Activity，用于获取类名
      */
-    public static void track(final String eventName,  JSONObject properties,  final Activity activity ) {
+    public static void track(final String eventName, JSONObject properties, final Activity activity) {
         try {
-            if(activity != null){
+            if (activity != null) {
                 String className = activity.getClass().getCanonicalName();
-                if(properties == null){
-                    properties= new JSONObject();
+                if (properties == null) {
+                    properties = new JSONObject();
                 }
-                properties.put(CLASS_NAME,className);
+                properties.put(CLASS_NAME, className);
             }
-            SensorsDataAPI.sharedInstance().track(eventName,properties);
+            SensorsDataAPI.sharedInstance().track(eventName, properties);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -53,18 +57,18 @@ public class SensorsDataUtil {
      *
      * @param eventName  事件的名称
      * @param properties 事件的属性
-     * @param fragment 事件发生时所在的 Fragment，用于获取类名
+     * @param fragment   事件发生时所在的 Fragment，用于获取类名
      */
-    public static void track(final String eventName,  JSONObject properties, final android.app.Fragment fragment) {
+    public static void track(final String eventName, JSONObject properties, final android.app.Fragment fragment) {
         try {
-            if(fragment != null){
+            if (fragment != null) {
                 String className = fragment.getClass().getCanonicalName();
-                if(properties == null){
-                    properties= new JSONObject();
+                if (properties == null) {
+                    properties = new JSONObject();
                 }
-                properties.put(CLASS_NAME,className);
+                properties.put(CLASS_NAME, className);
             }
-            SensorsDataAPI.sharedInstance().track(eventName,properties);
+            SensorsDataAPI.sharedInstance().track(eventName, properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,18 +79,18 @@ public class SensorsDataUtil {
      *
      * @param eventName  事件的名称
      * @param properties 事件的属性
-     * @param fragment 事件发生时所在的 Fragment，用于获取类名
+     * @param fragment   事件发生时所在的 Fragment，用于获取类名
      */
-    public static void track(final String eventName,  JSONObject properties, final android.support.v4.app.Fragment fragment) {
+    public static void track(final String eventName, JSONObject properties, final android.support.v4.app.Fragment fragment) {
         try {
-            if(fragment != null){
+            if (fragment != null) {
                 String className = fragment.getClass().getCanonicalName();
-                if(properties == null){
-                    properties= new JSONObject();
+                if (properties == null) {
+                    properties = new JSONObject();
                 }
-                properties.put(CLASS_NAME,className);
+                properties.put(CLASS_NAME, className);
             }
-            SensorsDataAPI.sharedInstance().track(eventName,properties);
+            SensorsDataAPI.sharedInstance().track(eventName, properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,24 +101,24 @@ public class SensorsDataUtil {
      *
      * @param eventName  事件的名称
      * @param properties 事件的属性
-     * @param view 事件发生时所在的 View ，用于获取类名、ViewPath
+     * @param view       事件发生时所在的 View ，用于获取类名、ViewPath
      */
-    public static void track(final String eventName,  JSONObject properties, final View view) {
+    public static void track(final String eventName, JSONObject properties, final View view) {
         try {
             if (view != null) {
-                if(properties == null){
-                    properties= new JSONObject();
+                if (properties == null) {
+                    properties = new JSONObject();
                 }
 
                 //获取所在的 Context
                 Context context = view.getContext();
                 //将 Context 转成 Activity
                 Activity activity = AopUtil.getActivityFromContext(context, view);
-                if(activity != null){
+                if (activity != null) {
                     //获取类名
                     String className = activity.getClass().getCanonicalName();
-                    properties.put(CLASS_NAME,className);
-                    getFragmentNameFromView(view,properties);
+                    properties.put(CLASS_NAME, className);
+                    getFragmentNameFromView(view, properties);
                     // viewPath
                     addViewPathProperties(activity, view, properties);
                 }
@@ -125,26 +129,58 @@ public class SensorsDataUtil {
         }
     }
 
+    /**
+     * 保存用户 推送 ID 到用户表
+     *
+     * @param property 属性名称（例如 jgId ）
+     * @param pushId   推送 ID
+     * @param context  context
+     *                 使用：profilePushId("jgId",JPushInterface.getRegistrationID(this),this);
+     */
+    public  void profilePushId(String property, String pushId, Context context) {
+        try {
+            if (TextUtils.isEmpty(property)||TextUtils.isEmpty(pushId) || context == null) {
+                return;
+            }
+            //当前的 distinctId + jgId
+            String distinctId = SensorsDataAPI.sharedInstance().getLoginId();
+            if (TextUtils.isEmpty(distinctId)) {
+                distinctId = SensorsDataAPI.sharedInstance().getAnonymousId();
+            }
+            String distinctId_jgId = distinctId + pushId;
 
+            //获取存储的 sp_distinctId_jgId
+            SharedPreferences sp = context.getSharedPreferences(context.getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
+            String sp_distinctId_jgId = sp.getString("distinctId" + property, "");
+
+            // 当前的 和 存储的 sp_distinctId_jgId 不相等时，触发 profileSet 设置 jgId
+            if (!distinctId_jgId.equals(sp_distinctId_jgId)) {
+                SensorsDataAPI.sharedInstance().profileSet(property, pushId);
+                sp.edit().putString("distinctId" + property, distinctId_jgId).apply();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     //----------------------------------------------------------------------
 
     private static void getFragmentNameFromView(View view, JSONObject properties) {
         try {
-                String fragmentName = (String) view.getTag(com.sensorsdata.analytics.android.sdk.R.id.sensors_analytics_tag_view_fragment_name);
-                String fragmentName2 = (String) view.getTag(com.sensorsdata.analytics.android.sdk.R.id.sensors_analytics_tag_view_fragment_name2);
-                if (!TextUtils.isEmpty(fragmentName2)) {
-                    fragmentName = fragmentName2;
-                }
-                if (!TextUtils.isEmpty(fragmentName)) {
-                    String screenName = properties.optString(CLASS_NAME);
+            String fragmentName = (String) view.getTag(com.sensorsdata.analytics.android.sdk.R.id.sensors_analytics_tag_view_fragment_name);
+            String fragmentName2 = (String) view.getTag(com.sensorsdata.analytics.android.sdk.R.id.sensors_analytics_tag_view_fragment_name2);
+            if (!TextUtils.isEmpty(fragmentName2)) {
+                fragmentName = fragmentName2;
+            }
+            if (!TextUtils.isEmpty(fragmentName)) {
+                String screenName = properties.optString(CLASS_NAME);
 //                    if (!TextUtils.isEmpty(fragmentName)) {
-                        properties.put(CLASS_NAME, String.format(Locale.CHINA, "%s|%s", screenName, fragmentName));
+                properties.put(CLASS_NAME, String.format(Locale.CHINA, "%s|%s", screenName, fragmentName));
 //                    } else {
 //                        properties.put(CLASS_NAME, fragmentName);
 //                    }
-                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

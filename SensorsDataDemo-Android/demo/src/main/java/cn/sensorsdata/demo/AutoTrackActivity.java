@@ -3,6 +3,7 @@ package cn.sensorsdata.demo;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackAppViewScreen
 import com.sensorsdata.analytics.android.sdk.SensorsDataIgnoreTrackOnClick;
 
 @Route(path = "/autotrack/activity")
-public class AutoTrackActivity extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class AutoTrackActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private TextView textView_bg=null;
     private ImageView imageView_bg=null;
@@ -49,7 +50,7 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
         if (Build.VERSION.SDK_INT>11)setActionBar();
         initView();
         initListView();
-
+        //DialogFragment
 
     }
 
@@ -271,7 +272,7 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
     /**
      * 设置ActionBar
      */
-    @TargetApi(11)
+    @TargetApi(18)
     private void setActionBar() {
         ActionBar actionBar = this.getActionBar();
         if(actionBar!=null){
@@ -280,12 +281,20 @@ public class AutoTrackActivity extends Activity implements View.OnClickListener,
         actionBar.setTitle("全埋点");
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.mipmap.left_back);
+
         int titleId = Resources.getSystem().getIdentifier("action_bar_title",
                 "id", "android");
         TextView tvTitle = (TextView) findViewById(titleId);
         int width = getResources().getDisplayMetrics().widthPixels;
         tvTitle.setWidth(width);
         tvTitle.setGravity(Gravity.CENTER);
+            tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AutoTrackActivity.this.finish();
+                }
+            });
         }
     }
 

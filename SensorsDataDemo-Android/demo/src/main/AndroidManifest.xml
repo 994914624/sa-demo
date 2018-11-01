@@ -117,6 +117,12 @@
 
         <!-- jiguang push Required from here -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <!-- since 3.0.9 Required SDK 核心功能-->
+        <provider
+            android:authorities="cn.sensorsdata.demo.DataProvider"
+            android:name="cn.jpush.android.service.DataProvider"
+            android:exported="false"
+            />
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
@@ -231,7 +237,6 @@
         <activity
             android:name=".XiaomiPushActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-
         <activity
             android:name=".AutoTrackActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
@@ -338,9 +343,9 @@
             android:name=".GeTuiService"
             android:exported="true"
             android:label="PushService"
-            android:process=".pushservice"
-             />
-        <service android:name=".GeTuiIntentService" />
+            android:process=".getui" />
+        <service android:name=".GeTuiIntentService"
+            android:process=".getui"/>
         <!-- 个推 to here -->
         <activity android:name=".GeTuiActivity" />
         <activity
@@ -403,8 +408,8 @@
             android:name=".yang.YangSingleActivity"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:process=".yang"
             android:name=".yang.YangWebViewActivity"
+            android:process=".yang"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".yang.BaseActivity"
@@ -422,8 +427,10 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f6eb192f7589687d1020c422bbc55c67" />
 
-        <activity android:name=".yang.ViewPagerActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".yang.ViewPagerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--<activity android:name=".BaseActivity"/>-->
     </application>
 
 </manifest>

@@ -15,8 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.igexin.sdk.PushManager;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAutoTrackAppViewScreenUrl;
 import com.sensorsdata.analytics.android.sdk.SensorsDataTrackViewOnClick;
+import com.xiaomi.mipush.sdk.MiPushClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,7 +34,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 @Route(path = "/jiguangpush/activity")
 @SensorsDataAutoTrackAppViewScreenUrl(url="xxx.jg页面")
-public class JiguangPushActivity extends Activity {
+public class JiguangPushActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,17 @@ public class JiguangPushActivity extends Activity {
         setContentView(R.layout.activity_jpush);
         if(Build.VERSION.SDK_INT>11)setActionBar();
         initView();
+
+
+        try {
+            JSONObject properties = new JSONObject();
+            properties.put("jgAndroidId", JPushInterface.getRegistrationID(this)+"");
+            // 设置用户 Profile
+            SensorsDataAPI.sharedInstance().profileSet(properties);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -68,6 +85,7 @@ public class JiguangPushActivity extends Activity {
         // 设置不显示左侧图标
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.mipmap.left_back);
         int titleId = Resources.getSystem().getIdentifier("action_bar_title",
                 "id", "android");
         TextView tvTitle = (TextView) findViewById(titleId);

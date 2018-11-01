@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 //应用 Bugtags 插件
-apply plugin: 'com.bugtags.library.plugin'
+//apply plugin: 'com.bugtags.library.plugin'
 //realm  此插件会和神策插件冲突，也会和ARouter冲突
 apply plugin: 'realm-android'
 //lambda
@@ -27,7 +27,6 @@ repluginHostConfig {
     useAppCompat = true
 }
 
-
 //添加 com.sensorsdata.analytics.android 插件
 apply plugin: 'com.sensorsdata.analytics.android'
 
@@ -39,6 +38,11 @@ repositories {
     mavenCentral()
 }
 
+//sensorsAnalytics {
+//    //debug = true
+//    disableJar = false
+//    exclude=['com.google.protobuf.micro','com.xiaomi']
+//}
 //sensorsAnalytics {
 //    excludeJarFilter 'BaiduLBS_Android.'
 //}
@@ -81,7 +85,7 @@ android {
 
     defaultConfig {
         applicationId "cn.sensorsdata.demo"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -210,21 +214,22 @@ android {
 
 }
 
-def buildTime() {
+def static buildTime() {
     def date = new Date()
     def formattedDate = date.format('yyyy-MM-dd')
     return formattedDate
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:26.0.0'
+    implementation 'com.android.support:support-v4:27.1.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     //xiaomi
-    implementation files('libs/MiPush_SDK_Client_3_2_1.jar')
+    //implementation files('libs/MiPush_SDK_Client_3_2_1.jar')
+    implementation files('libs/MiPush_SDK_Client_3_6_9.jar')
 
     //添加 Sensors Analytics SDK 依赖
 
@@ -235,9 +240,9 @@ dependencies {
     //    }
 
     //compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.8.10'
-    //implementation 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:2.0.1'
+    implementation 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:2.1.2'
 
-    implementation(name: 'SensorsAnalyticsSDK-debug', ext: 'aar')
+    //implementation(name: 'SensorsAnalyticsSDK-release', ext: 'aar')
 
     //crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
@@ -290,29 +295,39 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
 
     //compile files('libs/imsdk.jar')
-    implementation 'com.android.support:appcompat-v7:26.0.0'
+    //implementation 'com.android.support:appcompat-v7:27.1.1'
 
     //compile 'com.android.support:support-v4:23.0.0'
-    implementation 'cn.jiguang.sdk:jpush:3.0.0'
-    implementation 'cn.jiguang.sdk:jcore:1.0.0'
+//    implementation 'cn.jiguang.sdk:jpush:3.0.0'
+//    implementation 'cn.jiguang.sdk:jcore:1.0.0'
+
+    implementation 'cn.jiguang.sdk:jpush:3.1.6'
+    implementation 'cn.jiguang.sdk:jcore:1.2.5'
     //compile 'com.umeng.sdk:common:latest.integration'
+
     //compile 'com.umeng.sdk:analytics:latest.integration'
+
     //compile 'com.umeng.analytics:analytics:latest.integration'
-    implementation 'com.getui:sdk:2.10.2.0'
+    //implementation 'com.getui:sdk:2.10.2.0'
+   //ge tui
+    implementation 'com.getui:sdk:2.12.5.0'
+
+
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.litepal.android:core:1.5.1'
     implementation 'com.android.support:multidex:1.0.1'
 
     //compile 'com.android.support:support-v4:25.3.1'
-//    implementation 'com.jakewharton:butterknife:8.7.0'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+
+    //    implementation 'com.jakewharton:butterknife:8.7.0'
+
+    //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     implementation 'com.alibaba:arouter-api:1.2.1.1'
     implementation 'me.yokeyword:fragmentation:1.0.7'
     implementation 'com.growingio.android:vds-android-agent:1.1.8@aar'
     implementation 'com.yanzhenjie:permission:1.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
-
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
 
@@ -329,27 +344,37 @@ dependencies {
 
     //RePlugin
     implementation 'com.qihoo360.replugin:replugin-host-lib:2.2.4'
+
     //stetho
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-urlconnection:1.5.0'
     implementation 'com.facebook.stetho:stetho-js-rhino:1.5.0'
+
     //debug-db
     debugImplementation('com.amitshekhar.android:debug-db:1.0.3') {
         exclude group: 'com.android.support'
     }
+
     //Toasty
     implementation('com.github.GrenderG:Toasty:1.2.8') {
         exclude group: 'com.android.support'
     }
+
     //高德定位
     implementation 'com.amap.api:location:4.0.1'
+
     // Server
     implementation 'com.yanzhenjie:andserver:1.1.4'
+
+    //侧滑
+    compile 'cn.bingoogolapple:bga-swipebacklayout:1.2.0'
+
+
 }
 
 //----------crashlytics-----------
 
-apply plugin: 'io.fabric'
+//apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -370,7 +395,7 @@ configurations.all {
         def requested = details.requested
         if (requested.group == 'com.android.support') {
             if (!requested.name.startsWith("multidex")) {
-                details.useVersion '26.0.0'//默认使用的版本
+                details.useVersion '27.1.1'//默认使用的版本
             }
         }
     }

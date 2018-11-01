@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 
 import cn.jpush.android.data.c;
 import cn.sensorsdata.demo.R;
@@ -114,8 +115,9 @@ public class YangWebViewActivity extends BaseActivity {
         Log.d("yyy","getUserAgentString1:"+webSettings.getUserAgentString());
         //webSettings.setUserAgentString("qqqqqqqqq");
 
-        Log.d("yyy","getUserAgentString2:"+webSettings.getUserAgentString());
+        //Log.d("yyy","getUserAgentString2:"+webSettings.getUserAgentString());
 
+        new Date();
 
         //复写shouldOverrideUrlLoading()方法，使得 打开网页时不调用系统浏览器， 而是在本WebView中显示
         webView.setWebViewClient(new WebViewClient() {

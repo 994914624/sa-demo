@@ -84,7 +84,7 @@ public class LogcatUtil {
     public void init() {
         if (mContext != null) {
             if (isDebugMode(mContext) && isMainProcess(mContext)) {
-                String logDir = "MyLog";
+                String logDir = "111_My_log";
                 LOG_PATH_MEMORY_DIR = mContext.getFilesDir().getAbsolutePath() + File.separator + logDir;
                 LOG_PATH_SDCARD_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + logDir;
                 // 开始收集日志
@@ -182,7 +182,7 @@ public class LogcatUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                deleteLogFile(); // 删除之前的日志文件
+               // deleteLogFile(); // 删除之前的日志文件
                 logcat_v_time();// logcat -v time 收集日志信息
             }
         }).start();

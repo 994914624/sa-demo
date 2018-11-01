@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
+import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
@@ -22,13 +23,15 @@ import cn.jpush.android.api.JPushInterface;
  * 个推 IntentService 用于接收消息
  */
 
-public class GeTuiIntentService extends GTIntentService {
+public  class GeTuiIntentService extends GTIntentService {
 
-    private static String TAG = "GeTui";
+
+    private static final String TAG = "__ Ge Tui __";
+    private static final String TXT = "----------------------- 个推 ---------------------------\n";
 
     @Override
     public void onReceiveServicePid(Context context, int i) {
-        Log.i("onReceiveServicePid", "" + i);
+        Log.i(TAG,"onReceiveServicePid:" + TXT + i);
     }
 
     /**
@@ -37,6 +40,7 @@ public class GeTuiIntentService extends GTIntentService {
     @Override
     public void onReceiveClientId(Context context, String clientid) {
         try {
+            Log.i(TAG,"onReceiveClientId:" + TXT );
             JSONObject properties = new JSONObject();
             properties.put("gtId", clientid);
             // 将 clientid 保存到用户表 gtId 中
@@ -53,6 +57,7 @@ public class GeTuiIntentService extends GTIntentService {
     @Override
     public void onReceiveMessageData(Context context, final GTTransmitMessage gtTransmitMessage) {
         try {
+            Log.i(TAG,"onReceiveMessageData:" + TXT );
             JSONObject properties = new JSONObject();
             // 获取消息 ID，并保存在事件属性 msg_id 中
             properties.put("msg_id", gtTransmitMessage.getMessageId() );
@@ -69,7 +74,7 @@ public class GeTuiIntentService extends GTIntentService {
      */
     @Override
     public void onReceiveOnlineState(Context context, boolean b) {
-        Log.i(TAG, "onReceiveOnlineState:" + b);
+        Log.i(TAG,"onReceiveOnlineState:" + TXT );
     }
 
     /**
@@ -77,9 +82,21 @@ public class GeTuiIntentService extends GTIntentService {
      */
     @Override
     public void onReceiveCommandResult(Context context, GTCmdMessage gtCmdMessage) {
-        Log.i(TAG, "onReceiveCommandResult:" + gtCmdMessage.toString());
+        Log.i(TAG, "onReceiveCommandResult:" + TXT);
 
     }
 
+    //onNotificationMessageClicked
 
+
+    @Override
+    public void onNotificationMessageClicked(Context context, GTNotificationMessage gtNotificationMessage) {
+        Log.i(TAG, "onNotificationMessageClicked:" + TXT);
+    }
+
+    @Override
+    public void onNotificationMessageArrived(Context context, GTNotificationMessage gtNotificationMessage) {
+        Log.i(TAG, "onNotificationMessageArrived:" + TXT);
+        Toast.makeText(context," 个推 消息到达",Toast.LENGTH_SHORT).show();
+    }
 }

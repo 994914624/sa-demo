@@ -32,7 +32,7 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
  * 可视化埋点 Activity
  */
 @Route(path = "/vt/activity")
-public class VTActivity extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class VTActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private  TextView textView_vt_bg =null;
     private ImageView imageView_vt_bg=null;
